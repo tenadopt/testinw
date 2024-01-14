@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.calculator {
+    background: #494949;
+    border-radius: 15px;
+    color: white;
+    height: 100%;
+    position: relative;
+    width: 290px;
+}
+
+.circles {
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.circle.red {
+    background-color: red;
+}
+
+.circle.yellow {
+    background-color: yellow;
+}
+
+.circle.green {
+    background-color: green;
+}
+
+.value {
+    font-size: 60px;
+    font-weight: 300;
+    height: 80px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.buttons-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 2px;
+    place-items: center;
+    padding: 0 2px 2px;
+}
+
+.button {
+    align-items: center;
+    background-color: grey;
+    cursor: pointer;
+    display: flex;
+    font-size: 30px;
+    height: 70px;
+    justify-content: center;
+    transition: filter .3s;
+    width: 70px;
+}
+
+.button.function {
+    color: white;
+    background: #595858;
+}
+
+.button.operator {
+    background: #f1a33c;
+}
+
+.button.number-0 {
+    grid-column: 1 / span 2;
+    justify-content: center;
+    width: 142px;
+    border-bottom-left-radius: 13px;
+}
+
+.button.equal {
+    border-bottom-right-radius: 13px;
+}
+
+.button:active,
+.button:focus {
+    filter: brightness(120%);
+}
