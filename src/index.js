@@ -1,6 +1,9 @@
-import "./styles/dark.css";
+import "./styles/icons.css";
 
 // DOM Elements
+const theme = document.querySelector(".switch");
+const styleLink = document.getElementById("theme");
+
 const valueEl = document.querySelector(".value");
 
 const acEl = document.querySelector(".ac");
@@ -49,6 +52,26 @@ const getValueAsStr = () => valueEl.textContent.split(",").join("");
 const getValueAsNum = () => {
   return parseFloat(getValueAsStr());
 };
+
+let themeStyle = "dark";
+
+theme.addEventListener("click", () => switchTheme());
+
+// Swaps the stylesheet to achieve dark mode.
+function switchTheme() {
+  themeStyle = themeStyle === "dark" ? "light" : "dark";
+  theme.src =
+    themeStyle === "light" ? "assets/moonIcon.svg" : "assets/sunIcon.svg";
+
+  fetch(`styles/${themeStyle}.css`)
+    .then((response) => response.text())
+    .then((css) => {
+      const blob = new Blob([css], { type: "text/css" });
+      const url = URL.createObjectURL(blob);
+
+      styleLink.href = url;
+    });
+}
 
 // Set a string as the displayed value with proper formatting
 const setStrAsValue = (valueStr) => {

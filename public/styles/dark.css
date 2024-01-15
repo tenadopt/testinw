@@ -7,13 +7,25 @@
 
 body {
     font-family: "Helvetica Neue", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.topContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .calculator {
     background: #494949;
     border-radius: 15px;
     color: white;
-    height: 100%;
     position: relative;
     width: 290px;
 }
