@@ -1,12 +1,10 @@
 import './styles/icons.css';
-import { switchTheme } from './switchTheme';
-import { getValueAsStr, setStrAsValue } from './setStrValue';
-import { handleNumberClick } from './handleNumberClick';
-import { getResultOfOperationAsStr, getValueAsNum } from './getResultOfOperationAsStr';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
 const styleLink = document.getElementById('theme');
+
+const valueEl = document.querySelector('.value');
 
 const acEl = document.querySelector('.ac');
 const pmEl = document.querySelector('.pm');
@@ -44,23 +42,125 @@ const numberElArray = [
 
 let valueStrInMemory = null;
 let operatorInMemory = null;
-let hasResult = false;
 let shouldClearDisplay = false;
+let hasResult = false;
 let clearDisplayAfterPercent = false;
 
-const handleOperatorClick = operation => {
-    hasResult = false;
+// Get the current displayed value as a string
+const getValueAsStr = () => valueEl.textContent.split(',').join('');
 
+// Get the current displayed value as a number
+const getValueAsNum = () => {
+    return parseFloat(getValueAsStr());
+};
+
+let themeStyle = 'dark';
+
+theme.addEventListener('click', () => switchTheme());
+
+// Swaps the stylesheet to achieve dark mode.
+function switchTheme() {
+    themeStyle = themeStyle === 'dark' ? 'light' : 'dark';
+    theme.src = themeStyle === 'light' ? 'assets/moonIcon.svg' : 'assets/sunIcon.svg';
+
+    fetch(`styles/${themeStyle}.css`)
+        .then(response => response.text())
+        .then(css => {
+            const blob = new Blob([css], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+
+            styleLink.href = url;
+        });
+}
+
+// Set a string as the displayed value with proper formatting
+const setStrAsValue = valueStr => {
+    if (valueStr === 'Infinity') {
+        valueEl.textContent = 'Err';
+        return;
+    }
+
+    if (valueStr.length >= 11) {
+        return;
+    }
+
+    if (valueStr.length >= 7) {
+        valueEl.classList.add('smallValue');
+    } else {
+        valueEl.classList.remove('smallValue');
+    }
+
+    if (valueStr[valueStr.length - 1] === '.') {
+        valueEl.textContent += '.';
+        return;
+    }
+
+    const [wholeNumStr, decimalStr] = valueStr.split('.');
+    let formattedValue;
+
+    if (decimalStr) {
+        const trimmedDecimalStr = parseFloat('0.' + decimalStr)
+            .toString()
+            .slice(2);
+        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toLocaleString();
+    } else {
+        formattedValue = parseFloat(wholeNumStr).toLocaleString();
+    }
+
+    valueEl.textContent = formattedValue;
+};
+
+// Handle click events for number buttons
+const handleNumberClick = numStr => {
+    if (hasResult) {
+        setStrAsValue(numStr);
+        hasResult = false;
+    } else if (shouldClearDisplay) {
+        setStrAsValue(numStr);
+        shouldClearDisplay = false;
+    } else if (clearDisplayAfterPercent) {
+        setStrAsValue(numStr);
+        clearDisplayAfterPercent = false; // Сбрасываем флаг для следующего ввода
+    } else {
+        const currentValueStr = getValueAsStr();
+        setStrAsValue(currentValueStr + numStr);
+    }
+};
+
+// Calculate the result of the operation and return as a string
+const getResultOfOperationAsStr = () => {
+    const currentValueNum = getValueAsNum();
+    const valueNumInMemory = parseFloat(valueStrInMemory);
+    let newValueNum;
+    if (operatorInMemory === 'addition') {
+        newValueNum = valueNumInMemory + currentValueNum;
+    } else if (operatorInMemory === 'subtraction') {
+        newValueNum = valueNumInMemory - currentValueNum;
+    } else if (operatorInMemory === 'multiplication') {
+        newValueNum = valueNumInMemory * currentValueNum;
+    } else if (operatorInMemory === 'division') {
+        newValueNum = valueNumInMemory / currentValueNum;
+    }
+    const resultStr = newValueNum.toString();
+    setStrAsValue(resultStr);
+    return resultStr;
+};
+
+// Handle click events for operator buttons
+const handleOperatorClick = operation => {
     const currentValueStr = getValueAsStr();
+
     if (!valueStrInMemory) {
         valueStrInMemory = currentValueStr;
         operatorInMemory = operation;
         shouldClearDisplay = true;
     } else {
-        valueStrInMemory = getResultOfOperationAsStr(valueStrInMemory, operatorInMemory);
+        valueStrInMemory = getResultOfOperationAsStr();
         operatorInMemory = operation;
         shouldClearDisplay = true;
     }
+
+    hasResult = false;
     updateDisplay();
 };
 
@@ -69,9 +169,6 @@ const updateDisplay = () => {
     const currentValueStr = getValueAsStr();
     setStrAsValue(currentValueStr);
 };
-
-//theme switch
-theme.addEventListener('click', () => switchTheme(theme, styleLink));
 
 // Add Event Listeners to buttons
 acEl.addEventListener('click', () => {
@@ -104,44 +201,20 @@ percentEl.addEventListener('click', () => {
 
 // Add event listeners to operator buttons
 additionEl.addEventListener('click', () => {
-    handleOperatorClick(
-        'addition',
-        hasResult,
-        valueStrInMemory,
-        operatorInMemory,
-        shouldClearDisplay,
-    );
+    handleOperatorClick('addition');
 });
 subtractionEl.addEventListener('click', () => {
-    handleOperatorClick(
-        'subtraction',
-        hasResult,
-        valueStrInMemory,
-        operatorInMemory,
-        shouldClearDisplay,
-    );
+    handleOperatorClick('subtraction');
 });
 multiplicationEl.addEventListener('click', () => {
-    handleOperatorClick(
-        'multiplication',
-        hasResult,
-        valueStrInMemory,
-        operatorInMemory,
-        shouldClearDisplay,
-    );
+    handleOperatorClick('multiplication');
 });
 divisionEl.addEventListener('click', () => {
-    handleOperatorClick(
-        'division',
-        hasResult,
-        valueStrInMemory,
-        operatorInMemory,
-        shouldClearDisplay,
-    );
+    handleOperatorClick('division');
 });
 equalEl.addEventListener('click', () => {
     if (valueStrInMemory) {
-        const result = getResultOfOperationAsStr(valueStrInMemory, operatorInMemory);
+        const result = getResultOfOperationAsStr();
         operatorInMemory = 'equal';
         setStrAsValue(result);
         valueStrInMemory = null;
@@ -153,7 +226,7 @@ equalEl.addEventListener('click', () => {
 for (let i = 0; i < numberElArray.length; i++) {
     const numberEl = numberElArray[i];
     numberEl.addEventListener('click', () => {
-        handleNumberClick(i.toString(), hasResult, shouldClearDisplay, clearDisplayAfterPercent);
+        handleNumberClick(i.toString());
     });
 }
 decimalEl.addEventListener('click', () => {
