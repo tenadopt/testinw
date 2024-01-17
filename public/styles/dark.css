@@ -15,6 +15,7 @@ body {
 }
 
 .topContainer {
+    padding: 0 15px 0 5px;
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -28,6 +29,9 @@ body {
     color: white;
     position: relative;
     width: 290px;
+    -webkit-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
+    -moz-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
+    box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
 }
 
 .circles {
@@ -62,6 +66,13 @@ body {
     margin-bottom: 10px;
     margin-right: 10px;
     text-align: right;
+}
+
+.smallValue {
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 .buttons-container {
