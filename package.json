@@ -1,9 +1,12 @@
 {
   "name": "testinw",
   "version": "1.0.0",
+  "homepage": "https://tenadopt.github.io/testinw/",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "webpack serve",
     "build": "webpack"
   },
@@ -23,5 +26,8 @@
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "gh-pages": "^6.1.1"
   }
 }

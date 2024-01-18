@@ -8,7 +8,7 @@ module.exports = {
   entry: path.resolve(__dirname, "src", "index.js"),
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "[name].[contenthash].js",
+    filename: "[name].js",
     clean: true,
   },
   plugins: [
@@ -17,8 +17,6 @@ module.exports = {
       favicon: path.resolve(__dirname, "public", "favicon.ico"),
     }),
     new MiniCssExtractPlugin({
-      // filename: 'css/[name].[contenthash:8].css',
-      // chunkFilename: 'css/[name].[contenthash:8].css',
       filename: 'styles/[name].css'
     }),
     new CopyPlugin({

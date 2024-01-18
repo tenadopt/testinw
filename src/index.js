@@ -99,6 +99,7 @@ const setStrAsValue = valueStr => {
     let formattedValue;
 
     if (decimalStr) {
+        console.log(decimalStr);
         const trimmedDecimalStr = parseFloat('0.' + decimalStr)
             .toString()
             .slice(2);
@@ -120,7 +121,7 @@ const handleNumberClick = numStr => {
         shouldClearDisplay = false;
     } else if (clearDisplayAfterPercent) {
         setStrAsValue(numStr);
-        clearDisplayAfterPercent = false; // Сбрасываем флаг для следующего ввода
+        clearDisplayAfterPercent = false;
     } else {
         const currentValueStr = getValueAsStr();
         setStrAsValue(currentValueStr + numStr);
