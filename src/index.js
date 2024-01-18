@@ -90,7 +90,7 @@ const setStrAsValue = valueStr => {
         valueEl.classList.remove('smallValue');
     }
 
-    if (valueStr[valueStr.length - 1] === '.') {
+    if (valueStr[valueStr.length - 1] === '.' && !valueStr.includes('.')) {
         valueEl.textContent += '.';
         return;
     }
@@ -99,16 +99,16 @@ const setStrAsValue = valueStr => {
     let formattedValue;
 
     if (decimalStr) {
-        console.log(decimalStr);
         const trimmedDecimalStr = parseFloat('0.' + decimalStr)
             .toString()
             .slice(2);
-        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toLocaleString();
+        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toLocaleString('en-US');
     } else {
-        formattedValue = parseFloat(wholeNumStr).toLocaleString();
+        formattedValue = parseFloat(wholeNumStr).toLocaleString('en-US');
     }
 
     valueEl.textContent = formattedValue;
+    console.log(valueEl.textContent);
 };
 
 // Handle click events for number buttons
@@ -133,6 +133,11 @@ const getResultOfOperationAsStr = () => {
     const currentValueNum = getValueAsNum();
     const valueNumInMemory = parseFloat(valueStrInMemory);
     let newValueNum;
+
+    console.log('currentValueNum:', currentValueNum);
+    console.log('valueNumInMemory:', valueNumInMemory);
+    console.log('operatorInMemory:', operatorInMemory);
+
     if (operatorInMemory === 'addition') {
         newValueNum = valueNumInMemory + currentValueNum;
     } else if (operatorInMemory === 'subtraction') {
@@ -142,7 +147,10 @@ const getResultOfOperationAsStr = () => {
     } else if (operatorInMemory === 'division') {
         newValueNum = valueNumInMemory / currentValueNum;
     }
-    const resultStr = newValueNum.toString();
+
+    console.log('newValueNum:', newValueNum);
+
+    const resultStr = newValueNum.toFixed(5).toString();
     setStrAsValue(resultStr);
     return resultStr;
 };
