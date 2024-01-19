@@ -17,7 +17,7 @@ export const getResultOfOperationAsStr = (valueEl, valueStrInMemory, operatorInM
         newValueNum = valueNumInMemory / currentValueNum;
     }
 
-    const resultStr = newValueNum.toString();
+    const resultStr = newValueNum.toFixed(5).toString();
     setStrAsValue(valueEl, resultStr);
     return resultStr;
 };

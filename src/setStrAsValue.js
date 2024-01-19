@@ -15,7 +15,7 @@ export const setStrAsValue = (valueEl, valueStr) => {
         valueEl.classList.remove('smallValue');
     }
 
-    if (valueStr[valueStr.length - 1] === '.') {
+    if (valueStr[valueStr.length - 1] === '.' && !valueStr.includes('.')) {
         valueEl.textContent += '.';
         return;
     }
