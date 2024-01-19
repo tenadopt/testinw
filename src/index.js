@@ -108,7 +108,6 @@ const setStrAsValue = valueStr => {
     }
 
     valueEl.textContent = formattedValue;
-    console.log(valueEl.textContent);
 };
 
 // Handle click events for number buttons
@@ -134,10 +133,6 @@ const getResultOfOperationAsStr = () => {
     const valueNumInMemory = parseFloat(valueStrInMemory);
     let newValueNum;
 
-    console.log('currentValueNum:', currentValueNum);
-    console.log('valueNumInMemory:', valueNumInMemory);
-    console.log('operatorInMemory:', operatorInMemory);
-
     if (operatorInMemory === 'addition') {
         newValueNum = valueNumInMemory + currentValueNum;
     } else if (operatorInMemory === 'subtraction') {
@@ -147,8 +142,6 @@ const getResultOfOperationAsStr = () => {
     } else if (operatorInMemory === 'division') {
         newValueNum = valueNumInMemory / currentValueNum;
     }
-
-    console.log('newValueNum:', newValueNum);
 
     const resultStr = newValueNum.toFixed(5).toString();
     setStrAsValue(resultStr);
