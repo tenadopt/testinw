@@ -70,7 +70,7 @@ body {
 }
 
 .smallValue {
-    font-size: 40px;
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: right;

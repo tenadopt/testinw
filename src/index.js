@@ -1,4 +1,9 @@
 import './styles/icons.css';
+import { switchTheme } from './switchTheme';
+import { getValueAsStr } from './getValueAsStr';
+import { getValueAsNum } from './getValueAsNum';
+import { setStrAsValue } from './setStrAsValue';
+import { getResultOfOperationAsStr } from './getResultOfOperationAsStr';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -46,118 +51,33 @@ let shouldClearDisplay = false;
 let hasResult = false;
 let clearDisplayAfterPercent = false;
 
-// Get the current displayed value as a string
-const getValueAsStr = () => valueEl.textContent.split(',').join('');
-
-// Get the current displayed value as a number
-const getValueAsNum = () => {
-    return parseFloat(getValueAsStr());
-};
-
-let themeStyle = 'dark';
-
-theme.addEventListener('click', () => switchTheme());
-
-// Swaps the stylesheet to achieve dark mode.
-function switchTheme() {
-    themeStyle = themeStyle === 'dark' ? 'light' : 'dark';
-    theme.src = themeStyle === 'light' ? 'assets/moonIcon.svg' : 'assets/sunIcon.svg';
-
-    fetch(`styles/${themeStyle}.css`)
-        .then(response => response.text())
-        .then(css => {
-            const blob = new Blob([css], { type: 'text/css' });
-            const url = URL.createObjectURL(blob);
-
-            styleLink.href = url;
-        });
-}
-
-// Set a string as the displayed value with proper formatting
-const setStrAsValue = valueStr => {
-    if (valueStr === 'Infinity') {
-        valueEl.textContent = 'Err';
-        return;
-    }
-
-    if (valueStr.length >= 11) {
-        return;
-    }
-
-    if (valueStr.length >= 7) {
-        valueEl.classList.add('smallValue');
-    } else {
-        valueEl.classList.remove('smallValue');
-    }
-
-    if (valueStr[valueStr.length - 1] === '.' && !valueStr.includes('.')) {
-        valueEl.textContent += '.';
-        return;
-    }
-
-    const [wholeNumStr, decimalStr] = valueStr.split('.');
-    let formattedValue;
-
-    if (decimalStr) {
-        const trimmedDecimalStr = parseFloat('0.' + decimalStr)
-            .toString()
-            .slice(2);
-        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toLocaleString('en-US');
-    } else {
-        formattedValue = parseFloat(wholeNumStr).toLocaleString('en-US');
-    }
-
-    valueEl.textContent = formattedValue;
-};
-
 // Handle click events for number buttons
 const handleNumberClick = numStr => {
     if (hasResult) {
-        setStrAsValue(numStr);
+        setStrAsValue(valueEl, numStr);
         hasResult = false;
     } else if (shouldClearDisplay) {
-        setStrAsValue(numStr);
+        setStrAsValue(valueEl, numStr);
         shouldClearDisplay = false;
     } else if (clearDisplayAfterPercent) {
-        setStrAsValue(numStr);
+        setStrAsValue(valueEl, numStr);
         clearDisplayAfterPercent = false;
     } else {
-        const currentValueStr = getValueAsStr();
-        setStrAsValue(currentValueStr + numStr);
+        const currentValueStr = getValueAsStr(valueEl);
+        setStrAsValue(valueEl, currentValueStr + numStr);
     }
-};
-
-// Calculate the result of the operation and return as a string
-const getResultOfOperationAsStr = () => {
-    const currentValueNum = getValueAsNum();
-    const valueNumInMemory = parseFloat(valueStrInMemory);
-    let newValueNum;
-
-    if (operatorInMemory === 'addition') {
-        newValueNum = valueNumInMemory + currentValueNum;
-    } else if (operatorInMemory === 'subtraction') {
-        newValueNum = valueNumInMemory - currentValueNum;
-    } else if (operatorInMemory === 'multiplication') {
-        newValueNum = valueNumInMemory * currentValueNum;
-    } else if (operatorInMemory === 'division') {
-        newValueNum = valueNumInMemory / currentValueNum;
-    }
-
-    const resultStr = newValueNum.toFixed(5).toString();
-    setStrAsValue(resultStr);
-    return resultStr;
 };
 
 // Handle click events for operator buttons
 const handleOperatorClick = operation => {
-    const currentValueStr = getValueAsStr();
+    const currentValueStr = getValueAsStr(valueEl);
 
     if (!valueStrInMemory) {
         valueStrInMemory = currentValueStr;
         operatorInMemory = operation;
         shouldClearDisplay = true;
     } else {
-        valueStrInMemory = getResultOfOperationAsStr();
+        valueStrInMemory = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);
         operatorInMemory = operation;
         shouldClearDisplay = true;
     }
@@ -168,32 +88,35 @@ const handleOperatorClick = operation => {
 
 // Update the displayed value
 const updateDisplay = () => {
-    const currentValueStr = getValueAsStr();
-    setStrAsValue(currentValueStr);
+    const currentValueStr = getValueAsStr(valueEl);
+    setStrAsValue(valueEl, currentValueStr);
 };
+
+// Add Event Listeners to switch the theme
+theme.addEventListener('click', () => switchTheme(theme, styleLink));
 
 // Add Event Listeners to buttons
 acEl.addEventListener('click', () => {
-    setStrAsValue('0');
+    setStrAsValue(valueEl, '0');
     valueStrInMemory = null;
     operatorInMemory = null;
 });
 pmEl.addEventListener('click', () => {
-    const currentValueNum = getValueAsNum();
-    const currentValueStr = getValueAsStr();
+    const currentValueNum = getValueAsNum(valueEl);
+    const currentValueStr = getValueAsStr(valueEl);
 
     if (currentValueStr === '-0') {
-        setStrAsValue('0');
+        setStrAsValue(valueEl, '0');
         return;
     }
     if (currentValueNum >= 0) {
-        setStrAsValue('-' + currentValueStr);
+        setStrAsValue(valueEl, '-' + currentValueStr);
     } else {
-        setStrAsValue(currentValueStr.substring(1));
+        setStrAsValue(valueEl, currentValueStr.substring(1));
     }
 });
 percentEl.addEventListener('click', () => {
-    const currentValueNum = getValueAsNum();
+    const currentValueNum = getValueAsNum(valueEl);
     const newValueNum = currentValueNum / 100;
     setStrAsValue(newValueNum.toString());
     valueStrInMemory = null;
@@ -216,9 +139,9 @@ divisionEl.addEventListener('click', () => {
 });
 equalEl.addEventListener('click', () => {
     if (valueStrInMemory) {
-        const result = getResultOfOperationAsStr();
+        const result = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);
         operatorInMemory = 'equal';
-        setStrAsValue(result);
+        setStrAsValue(valueEl, result);
         valueStrInMemory = null;
         hasResult = true;
     }
@@ -232,8 +155,8 @@ for (let i = 0; i < numberElArray.length; i++) {
     });
 }
 decimalEl.addEventListener('click', () => {
-    const currentValueStr = getValueAsStr();
+    const currentValueStr = getValueAsStr(valueEl);
     if (!currentValueStr.includes('.')) {
-        setStrAsValue(currentValueStr + '.');
+        setStrAsValue(valueEl, currentValueStr + '.');
     }
 });
