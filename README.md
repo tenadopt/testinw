@@ -63,4 +63,19 @@ This file exports a function that takes a string as an argument and sets it as a
 ### switchTheme.js
 This file exports a function that switches the theme of the project.
 
+# Public Folder Structure
+
+The public folder contains assets and styles essential for the web application. Below is the structure:
+
+## Assets
+- moonIcon.svg: An SVG icon representing the moon.
+- sunIcon.svg: An SVG icon representing the sun.
+
+## Styles
+Contains CSS files and a favicon:
+- dark.css: A CSS file for dark theme styling.
+- light.css: A CSS file for light theme styling.
+- favicon.ico: The website's favicon.
+- index.html: The main HTML file of the application.
+
 ----------------------------------------------------
