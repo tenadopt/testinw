@@ -118,7 +118,7 @@ pmEl.addEventListener('click', () => {
 percentEl.addEventListener('click', () => {
     const currentValueNum = getValueAsNum(valueEl);
     const newValueNum = currentValueNum / 100;
-    setStrAsValue(newValueNum.toString());
+    setStrAsValue(valueEl, newValueNum.toString());
     valueStrInMemory = null;
     operatorInMemory = null;
     clearDisplayAfterPercent = true;
