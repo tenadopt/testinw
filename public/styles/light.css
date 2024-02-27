@@ -27,9 +27,9 @@ body {
 .calculator {
     background: #e8e8e8;
     border-radius: 15px;
-    color: #0c0c0c;
+    color: white;
     position: relative;
-    width: auto;
+    width: clamp(300px, 50%, 600px);
     -webkit-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
     -moz-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
     box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
@@ -49,28 +49,29 @@ body {
 }
 
 .circle.red {
-    background-color: #ff5858;
+    background-color: red;
 }
 
 .circle.yellow {
-    background-color: #ffd94a;
+    background-color: yellow;
 }
 
 .circle.green {
-    background-color: #9ee09e;
+    background-color: green;
 }
 
 .value {
-    font-size: 4rem;
+    font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 300;
-    height: 80px;
+    height: auto;
     margin-bottom: 10px;
     margin-right: 10px;
     text-align: right;
+    color: #0c0c0c;
 }
 
 .smallValue {
-    font-size: 2rem;
+    font-size: clamp(2rem, 5vw, 4rem);
     display: flex;
     align-items: center;
     justify-content: right;
@@ -80,9 +81,7 @@ body {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
-    gap: 2px;
     place-items: center;
-    padding: 0 2px 2px;
 }
 
 .button {
@@ -90,11 +89,11 @@ body {
     background-color: #c7c5c5;
     cursor: pointer;
     display: flex;
-    font-size: 2rem;
-    height: 70px;
+    font-size: clamp(1rem, 2vw, 2.5rem); /* Adjust font size based on viewport width */
+    height: clamp(50px, 8vw, 100px); /* Adapt height based on viewport width */
+    width: clamp(50px, 8vw, 100px); /* Adapt width based on viewport width */
     justify-content: center;
     transition: filter .3s;
-    width: 70px;
 }
 
 .button.function {
@@ -110,21 +109,24 @@ body {
     grid-column: 3 / span 2;
     grid-row: 6;
     justify-content: center;
-    width: 142px;
+    width: 100%;
+    aspect-ratio: 2 / 1;
 }
 
 .button.xdegy {
     grid-column: 2;
     grid-row: 5 / span 2;
     justify-content: center;
-    height: 142px;
+    height: 100%;
+    aspect-ratio: 1 / 2;
 }
 
 .button.xry {
     grid-column: 1 ;
     grid-row: 5 / span 2;
     justify-content: center;
-    height: 142px;
+    height: 100%;
+    aspect-ratio: 1 / 2;
     border-bottom-left-radius: 13px;
 }
 
