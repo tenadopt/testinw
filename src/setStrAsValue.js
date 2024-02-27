@@ -31,6 +31,7 @@ export const setStrAsValue = (valueEl, valueStr) => {
     } else {
         formattedValue = parseFloat(wholeNumStr).toLocaleString();
     }
-    console.log(formattedValue);
+
     valueEl.textContent = formattedValue;
+    console.log('formattedValue:', formattedValue);
 };
