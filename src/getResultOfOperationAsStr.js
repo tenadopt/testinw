@@ -53,7 +53,7 @@ export const getResultOfOperationAsStr = (valueEl, valueStrInMemory, operatorInM
             );
         case 'cuberootx':
             return (
-                calculator.setCommand(new MathRootCommand(valueNumInMemory,3)),
+                calculator.setCommand(new MathRootCommand(valueNumInMemory, 3)),
                     calculator.executeCommand()
             );
 
@@ -74,16 +74,17 @@ export const getResultOfOperationAsStr = (valueEl, valueStrInMemory, operatorInM
             )
         case 'xrooty':
             return (
-                calculator.setCommand(new MathRootCommand(valueNumInMemory,currentValueNum)),
-                calculator.executeCommand()
-            )
+                calculator.setCommand(new MathRootCommand(valueNumInMemory, currentValueNum)),
+                    calculator.executeCommand()
+            );
 
-    case 'xfactorial':
-        return (
-            calculator.setCommand(new FactorialCommand(valueNumInMemory)),
-                calculator.executeCommand()
-        )
-    };
+        case 'xfactorial':
+            return (
+                calculator.setCommand(new FactorialCommand(valueNumInMemory)),
+                    calculator.executeCommand()
+            )
+    }
+    ;
 
 
     // console.log('newValueNum', newValueNum)

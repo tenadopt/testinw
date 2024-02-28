@@ -7,15 +7,9 @@ export const setStrAsValue = (valueEl, valueStr) => {
         return;
     }
 
-    // if (valueStr.length >= 17) {
-    //     return;
-    // }
-    //
-    // if (valueStr.length >= 7) {
-    //     valueEl.classList.add('smallValue');
-    // } else {
-    //     valueEl.classList.remove('smallValue');
-    // }
+    if (valueStr.length >= 17) {
+        return;
+    }
 
     if (valueStr[valueStr.length - 1] === '.') {
         valueEl.textContent += '.';
