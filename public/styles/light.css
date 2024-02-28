@@ -113,7 +113,7 @@ body {
     aspect-ratio: 2 / 1;
 }
 
-.button.xdegy {
+.button.xdegreey {
     grid-column: 2;
     grid-row: 5 / span 2;
     justify-content: center;
@@ -121,7 +121,7 @@ body {
     aspect-ratio: 1 / 2;
 }
 
-.button.xry {
+.button.xrooty {
     grid-column: 1 ;
     grid-row: 5 / span 2;
     justify-content: center;

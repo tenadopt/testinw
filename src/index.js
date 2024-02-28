@@ -1,9 +1,9 @@
 import './styles/icons.css';
-import { switchTheme } from './switchTheme';
-import { getValueAsStr } from './getValueAsStr';
-import { getValueAsNum } from './getValueAsNum';
-import { setStrAsValue } from './setStrAsValue';
-import { getResultOfOperationAsStr } from './getResultOfOperationAsStr';
+import {switchTheme} from './switchTheme';
+import {getValueAsStr} from './getValueAsStr';
+import {getValueAsNum} from './getValueAsNum';
+import {setStrAsValue} from './setStrAsValue';
+import {getResultOfOperationAsStr} from './getResultOfOperationAsStr';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -19,6 +19,9 @@ const additionEl = document.querySelector('.addition');
 const subtractionEl = document.querySelector('.subtraction');
 const multiplicationEl = document.querySelector('.multiplication');
 const divisionEl = document.querySelector('.division');
+const sqxEl = document.querySelector('.squarex');
+const sqrxEl = document.querySelector('.squarerootx');
+
 const equalEl = document.querySelector('.equal');
 
 const decimalEl = document.querySelector('.decimal');
@@ -88,7 +91,7 @@ const handleOperatorClick = operation => {
 };
 
 // Update the displayed value
-const updateDisplay = () => {
+export const updateDisplay = () => {
     const currentValueStr = getValueAsStr(valueEl);
     setStrAsValue(valueEl, currentValueStr);
 };
@@ -138,6 +141,15 @@ multiplicationEl.addEventListener('click', () => {
 divisionEl.addEventListener('click', () => {
     handleOperatorClick('division');
 });
+
+sqxEl.addEventListener('click', () => {
+    handleOperatorClick('sqx');
+})
+
+sqrxEl.addEventListener('click', () => {
+    handleOperatorClick('sqrx')
+})
+
 equalEl.addEventListener('click', () => {
     if (valueStrInMemory) {
         const result = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);

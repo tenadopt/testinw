@@ -1,21 +1,21 @@
 // Set a string as the displayed value with proper formatting
 export const setStrAsValue = (valueEl, valueStr) => {
-    console.log('valueStr:', valueStr)
+
     if (!valueStr) return;
     if (valueStr === 'Infinity') {
         valueEl.textContent = 'Err';
         return;
     }
 
-    if (valueStr.length >= 17) {
-        return;
-    }
-
-    if (valueStr.length >= 7) {
-        valueEl.classList.add('smallValue');
-    } else {
-        valueEl.classList.remove('smallValue');
-    }
+    // if (valueStr.length >= 17) {
+    //     return;
+    // }
+    //
+    // if (valueStr.length >= 7) {
+    //     valueEl.classList.add('smallValue');
+    // } else {
+    //     valueEl.classList.remove('smallValue');
+    // }
 
     if (valueStr[valueStr.length - 1] === '.') {
         valueEl.textContent += '.';
@@ -29,10 +29,10 @@ export const setStrAsValue = (valueEl, valueStr) => {
         const trimmedDecimalStr = parseFloat('0.' + decimalStr)
             .toString()
             .slice(2);
-        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toLocaleString();
+        formattedValue = parseFloat(wholeNumStr + '.' + trimmedDecimalStr).toString();
     } else {
-        formattedValue = parseFloat(wholeNumStr).toLocaleString();
+        formattedValue = parseFloat(wholeNumStr).toString();
     }
-    console.log(formattedValue);
-    valueEl.textContent = formattedValue;
+
+    return valueEl.textContent = formattedValue;
 };

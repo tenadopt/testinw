@@ -5,6 +5,8 @@ import {PlusCommand} from "./commands/PlusCommand";
 import {SubstractionCommand} from "./commands/SubstractionCommand"
 import {MultiplicationCommand} from "./commands/MultiplicationCommand";
 import {DivisionCommand} from "./commands/DivisionCommand";
+import {MathRootCommand} from "./commands/MathRootCommand";
+import {ExponentionCommand} from "./commands/ExponentionCommand";
 
 // Calculate the result of the operation and return as a string
 export const getResultOfOperationAsStr = (valueEl, valueStrInMemory, operatorInMemory) => {
@@ -12,25 +14,46 @@ export const getResultOfOperationAsStr = (valueEl, valueStrInMemory, operatorInM
     const valueNumInMemory = parseFloat(valueStrInMemory);
     let newValueNum;
 
-    if (operatorInMemory === 'addition') {
-        // newValueNum = valueNumInMemory + currentValueNum;
-        calculator.setCommand(new PlusCommand(valueNumInMemory, currentValueNum));
-        calculator.executeCommand();
-    } else if (operatorInMemory === 'subtraction') {
-        // newValueNum = valueNumInMemory - currentValueNum;
-        calculator.setCommand(new SubstractionCommand(valueNumInMemory, currentValueNum));
-        calculator.executeCommand();
-    } else if (operatorInMemory === 'multiplication') {
-        // newValueNum = valueNumInMemory * currentValueNum;
-        calculator.setCommand(new MultiplicationCommand(valueNumInMemory, currentValueNum));
-        calculator.executeCommand();
-    } else if (operatorInMemory === 'division') {
-        // newValueNum = valueNumInMemory / currentValueNum;
-        calculator.setCommand(new DivisionCommand(valueStrInMemory, currentValueNum));
-        calculator.executeCommand();
+    console.log('operatorInMemory', operatorInMemory)
+
+    switch (operatorInMemory) {
+        case 'addition':
+            return (
+                calculator.setCommand(new PlusCommand(valueNumInMemory, currentValueNum)),
+                    calculator.executeCommand()
+            );
+        case 'subtraction':
+            return (
+                calculator.setCommand(new SubstractionCommand(valueNumInMemory, currentValueNum)),
+                    calculator.executeCommand()
+            );
+        case 'multiplication':
+            return (
+                calculator.setCommand(new MultiplicationCommand(valueNumInMemory, currentValueNum)),
+                    calculator.executeCommand()
+            );
+        case 'division':
+            return (
+                calculator.setCommand(new DivisionCommand(valueNumInMemory, currentValueNum)),
+                    calculator.executeCommand()
+            );
+        case 'sqx':
+            return (
+                calculator.setCommand(new ExponentionCommand(valueNumInMemory, 2)),
+                    calculator.executeCommand()
+            );
+        case 'sqrx':
+            return (
+                calculator.setCommand(new MathRootCommand(valueNumInMemory, 2)),
+                    calculator.executeCommand()
+            )
+
     }
+
+    console.log('newValueNum', newValueNum)
 
     const resultStr = newValueNum?.toFixed(5).toString();
     setStrAsValue(valueEl, resultStr);
+    console.log('resultStr', resultStr)
     return resultStr;
 };
