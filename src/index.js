@@ -21,6 +21,14 @@ const multiplicationEl = document.querySelector('.multiplication');
 const divisionEl = document.querySelector('.division');
 const sqxEl = document.querySelector('.squarex');
 const sqrxEl = document.querySelector('.squarerootx');
+const cubexEl = document.querySelector('.cubex');
+const cuberxEl = document.querySelector('.cuberootx');
+const tenxEl = document.querySelector('.tenx');
+const onedivxEl = document.querySelector('.onedivx');
+const xdegreeyEl = document.querySelector('.xdegreey');
+const xrootyEl = document.querySelector('.xrooty');
+const xfactorialEl = document.querySelector('.xfactorial')
+
 
 const equalEl = document.querySelector('.equal');
 
@@ -75,15 +83,14 @@ const handleNumberClick = numStr => {
 // Handle click events for operator buttons
 const handleOperatorClick = operation => {
     const currentValueStr = getValueAsStr(valueEl);
+    operatorInMemory = operation;
+    shouldClearDisplay = true;
 
     if (!valueStrInMemory) {
         valueStrInMemory = currentValueStr;
-        operatorInMemory = operation;
-        shouldClearDisplay = true;
+        getResultOfOperationAsStr(currentValueStr, valueStrInMemory, operatorInMemory);
     } else {
         valueStrInMemory = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);
-        operatorInMemory = operation;
-        shouldClearDisplay = true;
     }
 
     hasResult = false;
@@ -143,12 +150,34 @@ divisionEl.addEventListener('click', () => {
 });
 
 sqxEl.addEventListener('click', () => {
-    handleOperatorClick('sqx');
-})
+    handleOperatorClick('squarex');
+});
 
 sqrxEl.addEventListener('click', () => {
-    handleOperatorClick('sqrx')
-})
+    handleOperatorClick('squarerootx');
+});
+cubexEl.addEventListener('click', () => {
+    handleOperatorClick('cubex');
+});
+cuberxEl.addEventListener('click', () => {
+    handleOperatorClick('cuberootx');
+});
+tenxEl.addEventListener('click', () => {
+    handleOperatorClick('tenx');
+});
+onedivxEl.addEventListener('click', () => {
+    handleOperatorClick('onedivx');
+});
+xdegreeyEl.addEventListener('click', () => {
+    handleOperatorClick('xdegreey');
+});
+xrootyEl.addEventListener('click', () => {
+    handleOperatorClick('xrooty');
+});
+xfactorialEl.addEventListener('click', () => {
+    handleOperatorClick('xfactorial');
+});
+
 
 equalEl.addEventListener('click', () => {
     if (valueStrInMemory) {
