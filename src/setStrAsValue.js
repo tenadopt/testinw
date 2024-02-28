@@ -1,5 +1,7 @@
 // Set a string as the displayed value with proper formatting
 export const setStrAsValue = (valueEl, valueStr) => {
+    console.log('valueStr:', valueStr)
+    if (!valueStr) return;
     if (valueStr === 'Infinity') {
         valueEl.textContent = 'Err';
         return;
@@ -20,7 +22,7 @@ export const setStrAsValue = (valueEl, valueStr) => {
         return;
     }
 
-    const [wholeNumStr, decimalStr] = valueStr.split('.');
+    const [wholeNumStr, decimalStr] = valueStr.toString().split('.');
     let formattedValue;
 
     if (decimalStr) {

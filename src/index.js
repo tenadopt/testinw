@@ -4,13 +4,12 @@ import { getValueAsStr } from './getValueAsStr';
 import { getValueAsNum } from './getValueAsNum';
 import { setStrAsValue } from './setStrAsValue';
 import { getResultOfOperationAsStr } from './getResultOfOperationAsStr';
-import { Invoker, NumberCommand, OperationCommand } from './commands';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
 const styleLink = document.getElementById('theme');
 
-const valueEl = document.querySelector('.value');
+export const valueEl = document.querySelector('.value');
 
 const acEl = document.querySelector('.ac');
 const pmEl = document.querySelector('.pm');
@@ -52,22 +51,6 @@ let shouldClearDisplay = false;
 let hasResult = false;
 let clearDisplayAfterPercent = false;
 
-const invoker = new Invoker();
-const calculator = {
-    /* Your calculator's logic here, like handleNumberClick */
-};
-
-// Example for a number button click
-number1El.addEventListener('click', () => {
-    const command = new NumberCommand(calculator, '1');
-    invoker.executeCommand(command);
-});
-
-// Example for an operation button click
-additionEl.addEventListener('click', () => {
-    const command = new OperationCommand(calculator, 'addition');
-    invoker.executeCommand(command);
-});
 
 // Handle click events for number buttons
 const handleNumberClick = numStr => {
