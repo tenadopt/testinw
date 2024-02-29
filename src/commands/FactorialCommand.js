@@ -4,12 +4,17 @@ export class FactorialCommand {
         this.result;
     }
 
-    execute () {
-        if (this.firstOperand === 0 || this.firstOperand === 1) return 1;
+    execute() {
+        if (this.firstOperand === 0 || this.firstOperand === 1) {
+            return 1;
+        }
+
         for (let i = this.firstOperand - 1; i >= 1; i--) {
             this.firstOperand *= i;
         }
+
         this.result = this.firstOperand;
+
         return this.result;
     }
 
@@ -17,6 +22,7 @@ export class FactorialCommand {
         for (let i = 1; i <= this.result - 1; i++) {
             this.result /= i;
         }
+
         return this.result;
     }
 }

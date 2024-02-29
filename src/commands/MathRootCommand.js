@@ -1,12 +1,11 @@
 export class MathRootCommand {
     constructor(firstOperand, secondOperand) {
         this.firstOperand = parseFloat(firstOperand);
-        this.secondOperand = parseFloat(secondOperand)
-        this.result;
+        this.secondOperand = parseFloat(secondOperand);
     }
 
     execute() {
-        this.result = Math.pow(this.firstOperand, 1/this.secondOperand);
+        this.result = Math.pow(this.firstOperand, 1 / this.secondOperand);
         return this.result;
     }
 

@@ -1,16 +1,16 @@
 export class ExponentionCommand {
-    constructor(firstOperand, secondOperator) {
+    constructor(firstOperand, power) {
         this.firstOperand = parseFloat(firstOperand);
-        this.secondOperator = parseFloat(secondOperator);
+        this.power = parseFloat(power);
         this.result;
     }
 
     execute() {
-        this.result = Math.pow(this.firstOperand, this.secondOperator);
+        this.result = Math.pow(this.firstOperand, this.power);
         return this.result;
     }
 
     redo() {
-        return Math.pow(this.result, 1 / this.secondOperator);
+        return Math.pow(this.result, 1 / this.power);
     }
 }

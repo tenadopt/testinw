@@ -1,9 +1,9 @@
 import './styles/icons.css';
-import {switchTheme} from './switchTheme';
-import {getValueAsStr} from './getValueAsStr';
-import {getValueAsNum} from './getValueAsNum';
-import {setStrAsValue} from './setStrAsValue';
-import {getResultOfOperationAsStr} from './getResultOfOperationAsStr';
+import { switchTheme } from './switchTheme';
+import { getValueAsStr } from './getValueAsStr';
+import { getValueAsNum } from './getValueAsNum';
+import { setStrAsValue } from './setStrAsValue';
+import { getResultOfOperationAsStr } from './getResultOfOperationAsStr';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -27,10 +27,26 @@ const tenxEl = document.querySelector('.tenx');
 const onedivxEl = document.querySelector('.onedivx');
 const xdegreeyEl = document.querySelector('.xdegreey');
 const xrootyEl = document.querySelector('.xrooty');
-const xfactorialEl = document.querySelector('.xfactorial')
-
+const xfactorialEl = document.querySelector('.xfactorial');
 
 const equalEl = document.querySelector('.equal');
+
+const functionElArray = [
+    additionEl,
+    subtractionEl,
+    multiplicationEl,
+    divisionEl,
+    sqxEl,
+    sqrxEl,
+    cubexEl,
+    cuberxEl,
+    tenxEl,
+    onedivxEl,
+    xdegreeyEl,
+    xrootyEl,
+    xfactorialEl,
+    equalEl,
+];
 
 const decimalEl = document.querySelector('.decimal');
 const number0El = document.querySelector('.number-0');
@@ -62,7 +78,6 @@ let shouldClearDisplay = false;
 let hasResult = false;
 let clearDisplayAfterPercent = false;
 
-
 // Handle click events for number buttons
 const handleNumberClick = numStr => {
     if (hasResult) {
@@ -81,9 +96,9 @@ const handleNumberClick = numStr => {
 };
 
 // Handle click events for operator buttons
-const handleOperatorClick = operation => {
+const handleOperatorClick = action => {
     const currentValueStr = getValueAsStr(valueEl);
-    operatorInMemory = operation;
+    operatorInMemory = action;
     shouldClearDisplay = true;
 
     if (!valueStrInMemory) {
@@ -150,6 +165,7 @@ divisionEl.addEventListener('click', () => {
 });
 
 sqxEl.addEventListener('click', () => {
+    console.log('sqrx');
     handleOperatorClick('squarex');
 });
 
@@ -177,7 +193,6 @@ xrootyEl.addEventListener('click', () => {
 xfactorialEl.addEventListener('click', () => {
     handleOperatorClick('xfactorial');
 });
-
 
 equalEl.addEventListener('click', () => {
     if (valueStrInMemory) {

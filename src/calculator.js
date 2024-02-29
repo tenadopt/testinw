@@ -1,9 +1,9 @@
-import {setStrAsValue} from "./setStrAsValue";
-import {valueEl} from "./index";
+import { setStrAsValue } from './setStrAsValue';
+import { valueEl } from './index';
 
 class Calculator {
     constructor() {
-        this.command = '';
+        this.command = null;
         this.history = [];
     }
 
@@ -12,14 +12,14 @@ class Calculator {
     }
 
     executeCommand() {
-        const result = this.command.execute();
+        const result = this.command?.execute();
         if (result === Infinity) {
             this.history.push(0);
             // computation.innerHTML = 0;
             // return computation.innerHTML;
         }
         this.history.push(result);
-        setStrAsValue(valueEl, result)
+        setStrAsValue(valueEl, result);
         // computation.innerHTML = result;
     }
 
@@ -31,6 +31,4 @@ class Calculator {
     }
 }
 
-const calculator = new Calculator();
-
-export { calculator };
+export const calculator = new Calculator();
