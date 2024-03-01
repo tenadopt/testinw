@@ -10,8 +10,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     margin: 0;
+    height: 100vh;
 }
 
 .topContainer {
@@ -23,6 +23,13 @@ body {
     align-items: center;
 }
 
+.circles {
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
 .calculator {
     background: #494949;
     border-radius: 15px;
@@ -32,13 +39,6 @@ body {
     -webkit-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
     -moz-box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
     box-shadow: 0 0 64px -3px rgba(0,0,0,0.73);
-}
-
-.circles {
-    width: 60px;
-    display: flex;
-    justify-content: space-between;
-    margin-left: 10px;
 }
 
 .circle {
@@ -68,13 +68,6 @@ body {
     text-align: right;
 }
 
-.smallValue {
-    font-size: clamp(2rem, 5vw, 4rem);
-    display: flex;
-    align-items: center;
-    justify-content: right;
-}
-
 .buttons-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -87,9 +80,9 @@ body {
     background-color: grey;
     cursor: pointer;
     display: flex;
-    font-size: clamp(1rem, 2vw, 2.5rem); /* Adjust font size based on viewport width */
-    height: clamp(50px, 8vw, 100px); /* Adapt height based on viewport width */
-    width: clamp(50px, 8vw, 100px); /* Adapt width based on viewport width */
+    font-size: clamp(1rem, 2vw, 2.5rem);
+    height: clamp(50px, 8vw, 100px);
+    width: clamp(50px, 8vw, 100px);
     justify-content: center;
     transition: filter .3s;
 }
@@ -117,6 +110,7 @@ body {
     justify-content: center;
     height: 100%;
     aspect-ratio: 1 / 2;
+    border-bottom-left-radius: 13px;
 }
 
 .button.xrooty {
@@ -125,7 +119,6 @@ body {
     justify-content: center;
     height: 100%;
     aspect-ratio: 1 / 2;
-    border-bottom-left-radius: 13px;
 }
 
 .button.equal {

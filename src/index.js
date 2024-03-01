@@ -203,6 +203,7 @@ equalEl.addEventListener('click', () => {
         hasResult = true;
     }
 });
+//Add Event Listeners to functions
 
 // Add Event Listeners to number and decimal buttons
 for (let i = 0; i < numberElArray.length; i++) {

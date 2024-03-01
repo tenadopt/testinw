@@ -2,12 +2,11 @@ export class DivisionCommand {
     constructor(firstOperand, secondOperand) {
         this.firstOperand = parseFloat(firstOperand);
         this.secondOperand = parseFloat(secondOperand);
-        this.result;
     }
 
-    execute () {
+    execute() {
         this.result = this.firstOperand / this.secondOperand;
-        return this.result
+        return this.result;
     }
 
     redo() {
