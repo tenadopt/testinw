@@ -1,54 +1,62 @@
 import './styles/icons.css';
 import { switchTheme } from './switchTheme';
-import { getValueAsStr } from './getValueAsStr';
-import { getValueAsNum } from './getValueAsNum';
-import { setStrAsValue } from './setStrAsValue';
-import { getResultOfOperationAsStr } from './getResultOfOperationAsStr';
+import { getResultSimpleOperations, getResultWithOneOperand } from './getResultWithOneOperand';
+
+export const actions = {
+    plus: 'addition',
+    minus: 'subtraction',
+    divide: 'division',
+    multiply: 'multiplication',
+    squarex: 'squarex',
+    squarerootx: 'squarerootx',
+    cubex: 'cubex',
+    tenx: 'tenx',
+    cuberootx: 'cuberootx',
+    xdegreey: 'xdegreey',
+    onedivx: 'onedivx',
+    xfactorial: 'xfactorial',
+    xrooty: 'xrooty',
+    equal: 'equal',
+};
+
+const actionsWithOneOperand = [
+    actions.squarex,
+    actions.squarerootx,
+    actions.cubex,
+    actions.cuberootx,
+    actions.tenx,
+    actions.onedivx,
+    actions.xfactorial,
+];
 
 // DOM Elements
 const theme = document.querySelector('.switch');
 const styleLink = document.getElementById('theme');
 
-export const valueEl = document.querySelector('.value');
+export const inputEl = document.querySelector('.value');
 
 const acEl = document.querySelector('.ac');
-const pmEl = document.querySelector('.pm');
-const percentEl = document.querySelector('.percent');
+const pmEl = document.querySelector('#pm');
+const percentEl = document.querySelector('#percent');
 
-const additionEl = document.querySelector('.addition');
-const subtractionEl = document.querySelector('.subtraction');
-const multiplicationEl = document.querySelector('.multiplication');
-const divisionEl = document.querySelector('.division');
-const sqxEl = document.querySelector('.squarex');
-const sqrxEl = document.querySelector('.squarerootx');
-const cubexEl = document.querySelector('.cubex');
-const cuberxEl = document.querySelector('.cuberootx');
-const tenxEl = document.querySelector('.tenx');
-const onedivxEl = document.querySelector('.onedivx');
-const xdegreeyEl = document.querySelector('.xdegreey');
-const xrootyEl = document.querySelector('.xrooty');
-const xfactorialEl = document.querySelector('.xfactorial');
+const additionEl = document.getElementById('plus');
 
-const equalEl = document.querySelector('.equal');
+const subtractionEl = document.getElementById('subtraction');
+const multiplicationEl = document.getElementById('multiplication');
+const divisionEl = document.getElementById('division');
+const sqxEl = document.getElementById('squarex');
+const sqrxEl = document.getElementById('squarerootx');
+const cubexEl = document.getElementById('cubex');
+const cuberxEl = document.getElementById('cuberootx');
+const tenxEl = document.getElementById('tenx');
+const xdegreeyEl = document.getElementById('xdegreey');
+const onedivxEl = document.getElementById('onedivx');
+const xfactorialEl = document.getElementById('xfactorial');
+const xrootyEl = document.getElementById('xrooty');
 
-const functionElArray = [
-    additionEl,
-    subtractionEl,
-    multiplicationEl,
-    divisionEl,
-    sqxEl,
-    sqrxEl,
-    cubexEl,
-    cuberxEl,
-    tenxEl,
-    onedivxEl,
-    xdegreeyEl,
-    xrootyEl,
-    xfactorialEl,
-    equalEl,
-];
+const equalEl = document.querySelector('#equal');
 
-const decimalEl = document.querySelector('.decimal');
+const decimalEl = document.querySelector('#decimal');
 const number0El = document.querySelector('.number-0');
 const number1El = document.querySelector('.number-1');
 const number2El = document.querySelector('.number-2');
@@ -72,149 +80,184 @@ const numberElArray = [
     number9El,
 ];
 
-let valueStrInMemory = null;
-let operatorInMemory = null;
-let shouldClearDisplay = false;
-let hasResult = false;
-let clearDisplayAfterPercent = false;
+let valuesArr = [];
+let actionsArr = [];
+let displayValue = '0';
+let shouldDisplayValueUpdate = false;
+
+inputEl.textContent = displayValue;
+
+export const updateDisplay = value => {
+    inputEl.textContent = value;
+};
+
+const reset = () => {
+    valuesArr = [];
+    actionsArr = [];
+    displayValue = '0';
+    updateDisplay(displayValue);
+};
+
+const convertToDecimal = () => {
+    if (!(isNaN(displayValue) || displayValue.includes('.'))) {
+        displayValue = `${displayValue}.`;
+        updateDisplay(displayValue);
+    }
+};
+
+const parseValue = value => {
+    let floatValue = parseFloat(value);
+    if (Math.trunc(floatValue) === floatValue) {
+        return parseInt(value);
+    }
+    return floatValue;
+};
+
+//@params value=number
+const toDisplayValue = value => {
+    //какая-то логика по проверке и переприсвоению строкового значения
+    if (displayValue === '0' || (displayValue === '' && value !== 0)) {
+        displayValue = value.toString();
+    } else {
+        displayValue = `${displayValue}${value}`;
+    }
+    updateDisplay(displayValue);
+};
 
 // Handle click events for number buttons
-const handleNumberClick = numStr => {
-    if (hasResult) {
-        setStrAsValue(valueEl, numStr);
-        hasResult = false;
-    } else if (shouldClearDisplay) {
-        setStrAsValue(valueEl, numStr);
-        shouldClearDisplay = false;
-    } else if (clearDisplayAfterPercent) {
-        setStrAsValue(valueEl, numStr);
-        clearDisplayAfterPercent = false;
+const handleNumberClick = num => {
+    if (shouldDisplayValueUpdate) {
+        displayValue = '0';
+    }
+    toDisplayValue(num);
+};
+//@params value = number
+const setValue = value => {
+    //обработка массива
+    if (!valuesArr.length || valuesArr.length === 1) {
+        valuesArr.push(value);
     } else {
-        const currentValueStr = getValueAsStr(valueEl);
-        setStrAsValue(valueEl, currentValueStr + numStr);
+        valuesArr = [valuesArr[valuesArr.length - 1], value];
+    }
+};
+//@params value = string
+const setAction = action => {
+    //обработка массива
+    if (!actionsArr.length || actionsArr.length === 1) {
+        actionsArr.push(action);
+    } else {
+        actionsArr = [actionsArr[actionsArr.length - 1], action];
     }
 };
 
 // Handle click events for operator buttons
 const handleOperatorClick = action => {
-    const currentValueStr = getValueAsStr(valueEl);
-    operatorInMemory = action;
-    shouldClearDisplay = true;
-
-    if (!valueStrInMemory) {
-        valueStrInMemory = currentValueStr;
-        getResultOfOperationAsStr(currentValueStr, valueStrInMemory, operatorInMemory);
-    } else {
-        valueStrInMemory = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);
+    // присваивание экшена в массив
+    // калькуляция
+    // внутри калькуляции проверка на количество операторов и экшенов
+    // shouldDisplayValueUpdate = true
+    shouldDisplayValueUpdate = true;
+    // присвоение значения в массив values
+    setValue(parseValue(displayValue));
+    // присвоение action в массив actionArr
+    setAction(action);
+    // логика для 1 value & 1 action
+    console.log(valuesArr);
+    console.log(actionsArr);
+    /** region здесь логика которая должна быть в другой функции */
+    if (valuesArr.length === 1 && actionsArr.length === 1) {
+        //some logic
+        const res = getResultWithOneOperand(valuesArr[0], actionsArr[0]);
+        if (res !== null) {
+            valuesArr = [];
+            actionsArr = [];
+            displayValue = res.toString();
+            updateDisplay(displayValue);
+        }
     }
-
-    hasResult = false;
-    updateDisplay();
+    if (valuesArr.length === 2 && actionsArr.length === 2) {
+        if (actionsArr[1] === 'equal') {
+            //some logic + - / *
+            const res = getResultSimpleOperations(valuesArr, actionsArr);
+            valuesArr = [];
+            actionsArr = [];
+            displayValue = res.toString();
+            updateDisplay(displayValue);
+        } else {
+            let res = getResultSimpleOperations(valuesArr, actionsArr);
+            if (actionsWithOneOperand.includes(actionsArr[1])) {
+                res = getResultWithOneOperand(res, actionsArr[1]);
+            }
+            valuesArr = [valuesArr[1], res];
+            actionsArr = [actionsArr[1]];
+            displayValue = res.toString();
+            updateDisplay(displayValue);
+        }
+    }
+    /** endregion здесь логика которая должна быть в другой функции */
 };
 
 // Update the displayed value
-export const updateDisplay = () => {
-    const currentValueStr = getValueAsStr(valueEl);
-    setStrAsValue(valueEl, currentValueStr);
-};
 
 // Add Event Listeners to switch the theme
 theme.addEventListener('click', () => switchTheme(theme, styleLink));
 
 // Add Event Listeners to buttons
-acEl.addEventListener('click', () => {
-    setStrAsValue(valueEl, '0');
-    valueStrInMemory = null;
-    operatorInMemory = null;
-});
-pmEl.addEventListener('click', () => {
-    const currentValueNum = getValueAsNum(valueEl);
-    const currentValueStr = getValueAsStr(valueEl);
-
-    if (currentValueStr === '-0') {
-        setStrAsValue(valueEl, '0');
-        return;
-    }
-    if (currentValueNum >= 0) {
-        setStrAsValue(valueEl, '-' + currentValueStr);
-    } else {
-        setStrAsValue(valueEl, currentValueStr.substring(1));
-    }
-});
-percentEl.addEventListener('click', () => {
-    const currentValueNum = getValueAsNum(valueEl);
-    const newValueNum = currentValueNum / 100;
-    setStrAsValue(valueEl, newValueNum.toString());
-    valueStrInMemory = null;
-    operatorInMemory = null;
-    clearDisplayAfterPercent = true;
-});
+acEl.addEventListener('click', reset);
+pmEl.addEventListener('click', () => {});
+percentEl.addEventListener('click', () => {});
 
 // Add event listeners to operator buttons
-additionEl.addEventListener('click', () => {
-    handleOperatorClick('addition');
-});
+additionEl.addEventListener('click', () => handleOperatorClick(actions.plus));
+
 subtractionEl.addEventListener('click', () => {
-    handleOperatorClick('subtraction');
+    handleOperatorClick(actions.minus);
 });
 multiplicationEl.addEventListener('click', () => {
-    handleOperatorClick('multiplication');
+    handleOperatorClick(actions.multiply);
 });
 divisionEl.addEventListener('click', () => {
-    handleOperatorClick('division');
+    handleOperatorClick(actions.divide);
 });
 
 sqxEl.addEventListener('click', () => {
-    console.log('sqrx');
-    handleOperatorClick('squarex');
+    handleOperatorClick(actions.squarex);
 });
 
 sqrxEl.addEventListener('click', () => {
-    handleOperatorClick('squarerootx');
+    handleOperatorClick(actions.squarerootx);
 });
 cubexEl.addEventListener('click', () => {
-    handleOperatorClick('cubex');
+    handleOperatorClick(actions.cubex);
 });
 cuberxEl.addEventListener('click', () => {
-    handleOperatorClick('cuberootx');
+    handleOperatorClick(actions.cuberootx);
 });
 tenxEl.addEventListener('click', () => {
-    handleOperatorClick('tenx');
+    handleOperatorClick(actions.tenx);
 });
 onedivxEl.addEventListener('click', () => {
-    handleOperatorClick('onedivx');
+    handleOperatorClick(actions.onedivx);
 });
 xdegreeyEl.addEventListener('click', () => {
-    handleOperatorClick('xdegreey');
+    handleOperatorClick(actions.xdegreey);
 });
 xrootyEl.addEventListener('click', () => {
-    handleOperatorClick('xrooty');
+    handleOperatorClick(actions.xrooty);
 });
 xfactorialEl.addEventListener('click', () => {
-    handleOperatorClick('xfactorial');
+    handleOperatorClick(actions.xfactorial);
 });
 
 equalEl.addEventListener('click', () => {
-    if (valueStrInMemory) {
-        const result = getResultOfOperationAsStr(valueEl, valueStrInMemory, operatorInMemory);
-        operatorInMemory = 'equal';
-        setStrAsValue(valueEl, result);
-        valueStrInMemory = null;
-        hasResult = true;
-    }
+    handleOperatorClick(actions.equal);
 });
-//Add Event Listeners to functions
 
-// Add Event Listeners to number and decimal buttons
-for (let i = 0; i < numberElArray.length; i++) {
-    const numberEl = numberElArray[i];
+numberElArray.forEach((numberEl, index) => {
     numberEl.addEventListener('click', () => {
-        handleNumberClick(i.toString());
+        handleNumberClick(index);
     });
-}
+});
 decimalEl.addEventListener('click', () => {
-    const currentValueStr = getValueAsStr(valueEl);
-    if (!currentValueStr.includes('.')) {
-        setStrAsValue(valueEl, currentValueStr + '.');
-    }
+    convertToDecimal();
 });

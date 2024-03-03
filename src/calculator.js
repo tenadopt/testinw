@@ -1,5 +1,5 @@
 import { setStrAsValue } from './setStrAsValue';
-import { valueEl } from './index';
+import { inputEl } from './index';
 
 class Calculator {
     constructor() {
@@ -19,7 +19,8 @@ class Calculator {
             // return computation.innerHTML;
         }
         this.history.push(result);
-        setStrAsValue(valueEl, result);
+        // setStrAsValue(inputEl, result);
+        return result;
         // computation.innerHTML = result;
     }
 
