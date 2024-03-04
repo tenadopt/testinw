@@ -115,10 +115,10 @@ const parseValue = value => {
 
 //@params value=number
 const toDisplayValue = value => {
-    debugger;
     //какая-то логика по проверке и переприсвоению строкового значения
-    if (displayValue === '0' || (displayValue === '' && value !== 0)) {
+    if (displayValue === '0' || (displayValue === '' && value !== 0) || shouldDisplayValueUpdate) {
         displayValue = value.toString();
+        shouldDisplayValueUpdate = false;
     } else {
         displayValue = `${displayValue}${value}`;
     }
@@ -183,7 +183,8 @@ const handleOperatorClick = action => {
             const res = getResultSimpleOperations(valuesArr, actionsArr);
             valuesArr = [];
             actionsArr = [];
-            displayValue = toDisplayValue(res.toString());
+            displayValue = res.toString();
+            updateDisplay(displayValue);
         } else {
             let res = getResultSimpleOperations(valuesArr, actionsArr);
             if (actionsWithOneOperand.includes(actionsArr[1])) {
