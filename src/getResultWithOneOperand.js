@@ -6,13 +6,14 @@ import { DivisionCommand } from './commands/DivisionCommand';
 import { MathRootCommand } from './commands/MathRootCommand';
 import { ExponentionCommand } from './commands/ExponentionCommand';
 import { FactorialCommand } from './commands/FactorialCommand';
+import { PercentCommand } from './commands/PercentCommand';
 
 // Calculate the result of the simple operations and return as a string
 export const getResultSimpleOperations = (valuesArr, actionsArr) => {
     const currentAction = actionsArr[0];
     const currentValue = valuesArr[1];
     const prevValue = valuesArr[0];
-
+    debugger;
     switch (currentAction) {
         case 'addition':
             calculator.setCommand(new PlusCommand(prevValue, currentValue));
@@ -31,6 +32,7 @@ export const getResultSimpleOperations = (valuesArr, actionsArr) => {
 
 // Calculate the result of the operation and return as a string
 export const getResultWithOneOperand = (value, action) => {
+    console.log('ONE OPERAND value', value);
     switch (action) {
         case 'squarex':
             calculator.setCommand(new ExponentionCommand(value, 2));
@@ -50,6 +52,10 @@ export const getResultWithOneOperand = (value, action) => {
         case 'onedivx':
             calculator.setCommand(new DivisionCommand(1, value));
             return calculator.executeCommand();
+        case 'percent':
+            calculator.setCommand(new PercentCommand(value));
+            return calculator.executeCommand();
+
         // case 'xdegreey':
         //
         //         calculator.setCommand(new ExponentionCommand(prevValue, currentValue))

@@ -2,7 +2,6 @@ export class ExponentionCommand {
     constructor(firstOperand, power) {
         this.firstOperand = parseFloat(firstOperand);
         this.power = parseFloat(power);
-        this.result;
     }
 
     execute() {

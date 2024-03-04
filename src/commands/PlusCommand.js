@@ -2,7 +2,6 @@ export class PlusCommand {
     constructor(firstOperand, secondOperand) {
         this.firstOperand = parseFloat(firstOperand);
         this.secondOperand = parseFloat(secondOperand);
-        this.result;
     }
 
     execute() {
