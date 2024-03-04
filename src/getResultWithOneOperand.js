@@ -10,6 +10,7 @@ import { PercentCommand } from './commands/PercentCommand';
 import { ChangeSignCommand } from './commands/ChangeSignCommand';
 import { actions } from './index';
 import { OneDivXCommand } from './commands/OneDivXCommand';
+import { MemoryPlusCommand } from './commands/MemoryPlusCommand';
 
 // Calculate the result of the simple operations and return as a string
 export const getResultSimpleOperations = (valuesArr, actionsArr) => {
@@ -69,14 +70,10 @@ export const getResultWithOneOperand = (value, action) => {
         case actions.pm:
             calculator.setCommand(new ChangeSignCommand(value));
             return calculator.executeCommand();
+        case actions.mplus:
+            calculator.setCommand(new MemoryPlusCommand(value));
+            return calculator.executeCommand();
         default:
             return null;
     }
-
-    // console.log('newValueNum', newValueNum)
-    //
-    // const resultStr = newValueNum?.toFixed(5).toString();
-    // setStrAsValue(valueEl, resultStr);
-    // console.log('resultStr', resultStr)
-    // return resultStr;
 };

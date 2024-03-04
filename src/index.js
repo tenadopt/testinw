@@ -19,6 +19,10 @@ export const actions = {
     xrooty: 'xrooty',
     equal: 'equal',
     pm: 'pm',
+    mplus: 'mplus',
+    mminus: 'mminus',
+    mr: 'mr',
+    mc: 'mc',
 };
 
 export const actionsWithOneOperand = [
@@ -32,6 +36,8 @@ export const actionsWithOneOperand = [
     actions.xfactorial,
     actions.pm,
 ];
+
+export const actionsWithMemory = [];
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -57,6 +63,10 @@ const xdegreeyEl = document.getElementById('xdegreey');
 const onedivxEl = document.getElementById('onedivx');
 const xfactorialEl = document.getElementById('xfactorial');
 const xrootyEl = document.getElementById('xrooty');
+const mplusEl = document.getElementById('mplus');
+const mminusEl = document.getElementById('mminus');
+const mcEl = document.getElementById('mc');
+const mrEl = document.getElementById('mr');
 
 const equalEl = document.querySelector('#equal');
 
@@ -88,12 +98,40 @@ let valuesArr = [];
 let actionsArr = [];
 let displayValue = '0';
 let shouldDisplayValueUpdate = false;
+let memoryParam = 0;
 
-inputEl.textContent = displayValue;
+const parseValue = value => {
+    let floatValue = parseFloat(value);
+    if (Math.trunc(floatValue) === floatValue) {
+        return parseInt(value);
+    }
+    return floatValue;
+};
 
 export const updateDisplay = value => {
     inputEl.textContent = value;
 };
+
+const plusToMemory = () => {
+    const numValue = parseValue(displayValue);
+    memoryParam += numValue;
+};
+
+const minusToMemory = () => {
+    const numValue = parseValue(displayValue);
+    memoryParam -= numValue;
+};
+
+const clearToMemory = () => {
+    memoryParam = 0;
+};
+
+const displayMemoryValue = () => {
+    displayValue = memoryParam.toString();
+    updateDisplay(displayValue);
+};
+
+inputEl.textContent = displayValue;
 
 const reset = () => {
     valuesArr = [];
@@ -107,14 +145,6 @@ const convertToDecimal = () => {
         displayValue = `${displayValue}.`;
         updateDisplay(displayValue);
     }
-};
-
-const parseValue = value => {
-    let floatValue = parseFloat(value);
-    if (Math.trunc(floatValue) === floatValue) {
-        return parseInt(value);
-    }
-    return floatValue;
 };
 
 //@params value=number
@@ -171,14 +201,20 @@ const handleOperatorClick = action => {
     console.log(actionsArr);
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
-        //some logic
-        const res = getResultWithOneOperand(valuesArr[0], actionsArr[0]);
-        if (res !== null) {
+        if (actionsArr[0] === actions.mplus) {
+            handleMemoryClick(actionsArr[0]);
             valuesArr = [];
             actionsArr = [];
-            displayValue = res.toString();
-            console.log('displayValue', displayValue);
-            updateDisplay(displayValue);
+        } else {
+            //some logic
+            const res = getResultWithOneOperand(valuesArr[0], actionsArr[0]);
+            if (res !== null) {
+                valuesArr = [];
+                actionsArr = [];
+                displayValue = res.toString();
+                console.log('displayValue', displayValue);
+                updateDisplay(displayValue);
+            }
         }
     }
     if (valuesArr.length === 2 && actionsArr.length === 2) {
@@ -190,16 +226,13 @@ const handleOperatorClick = action => {
             displayValue = res.toString();
             updateDisplay(displayValue);
         } else {
-            if (actionsWithOneOperand.includes('pm')) {
-                debugger;
-                const res = getResultWithOneOperand(valuesArr[1], actionsArr);
-                valuesArr[1] = res;
-            }
             let res = getResultSimpleOperations(valuesArr, actionsArr);
             if (actionsWithOneOperand.includes(actionsArr[1])) {
                 res = getResultWithOneOperand(res, actionsArr[1]);
                 valuesArr = [];
                 actionsArr = [];
+            } else if (action === actions.mminus) {
+                //logic
             } else {
                 valuesArr = [valuesArr[1], res];
                 actionsArr = [actionsArr[1]];
@@ -209,6 +242,26 @@ const handleOperatorClick = action => {
         }
     }
     /** endregion здесь логика которая должна быть в другой функции */
+};
+
+const handleMemoryClick = action => {
+    switch (action) {
+        case actions.mplus:
+            plusToMemory();
+            break;
+        case actions.mminus:
+            minusToMemory();
+            break;
+        case actions.mr:
+            displayMemoryValue();
+            break;
+        case actions.mc:
+            clearToMemory();
+            break;
+        default:
+            break;
+    }
+    console.log('memoryParam', memoryParam);
 };
 
 // Update the displayed value
@@ -263,6 +316,18 @@ xrootyEl.addEventListener('click', () => {
 });
 xfactorialEl.addEventListener('click', () => {
     handleOperatorClick(actions.xfactorial);
+});
+mplusEl.addEventListener('click', () => {
+    handleOperatorClick(actions.mplus);
+});
+mminusEl.addEventListener('click', () => {
+    handleOperatorClick(actions.mminus);
+});
+mrEl.addEventListener('click', () => {
+    handleOperatorClick(actions.mr);
+});
+mcEl.addEventListener('click', () => {
+    handleOperatorClick(actions.mc);
 });
 
 equalEl.addEventListener('click', () => {
