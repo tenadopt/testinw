@@ -37,7 +37,7 @@ export const actionsWithOneOperand = [
     actions.pm,
 ];
 
-export const actionsWithMemory = [];
+export const actionsWithMemory = [actions.mplus, actions.mminus, actions.mr, actions.mc];
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -201,7 +201,7 @@ const handleOperatorClick = action => {
     console.log(actionsArr);
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
-        if (actionsArr[0] === actions.mplus) {
+        if (actionsWithMemory.includes(actionsArr[0])) {
             handleMemoryClick(actionsArr[0]);
             valuesArr = [];
             actionsArr = [];
@@ -231,7 +231,13 @@ const handleOperatorClick = action => {
                 res = getResultWithOneOperand(res, actionsArr[1]);
                 valuesArr = [];
                 actionsArr = [];
-            } else if (action === actions.mminus) {
+            } else if (actionsWithMemory.includes(actionsArr[1])) {
+                res = getResultWithOneOperand(res, actionsArr[1]);
+                displayValue = res.toString();
+                updateDisplay(displayValue);
+                handleMemoryClick(actionsArr[1]);
+                valuesArr = [];
+                actionsArr = [];
                 //logic
             } else {
                 valuesArr = [valuesArr[1], res];
