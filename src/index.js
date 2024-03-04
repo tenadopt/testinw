@@ -18,14 +18,8 @@ export const actions = {
     xfactorial: 'xfactorial',
     xrooty: 'xrooty',
     equal: 'equal',
+    pm: 'pm',
 };
-
-export const actionsWithTwoOperand = [
-    actions.plus,
-    actions.minus,
-    actions.divide,
-    actions.multiply,
-];
 
 export const actionsWithOneOperand = [
     actions.squarex,
@@ -36,6 +30,7 @@ export const actionsWithOneOperand = [
     actions.onedivx,
     actions.percent,
     actions.xfactorial,
+    actions.pm,
 ];
 
 // DOM Elements
@@ -172,6 +167,8 @@ const handleOperatorClick = action => {
     // присвоение action в массив actionArr
     setAction(action);
     // логика для 1 value & 1 action
+    console.log(valuesArr);
+    console.log(actionsArr);
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
         //some logic
@@ -180,6 +177,7 @@ const handleOperatorClick = action => {
             valuesArr = [];
             actionsArr = [];
             displayValue = res.toString();
+            console.log('displayValue', displayValue);
             updateDisplay(displayValue);
         }
     }
@@ -191,33 +189,23 @@ const handleOperatorClick = action => {
             actionsArr = [];
             displayValue = res.toString();
             updateDisplay(displayValue);
-        } else if (
-            actionsWithOneOperand.includes(actionsArr[0]) &&
-            actionsWithOneOperand.includes(actionsArr[1])
-        ) {
-            let res = getResultWithOneOperand(valuesArr[1], actionsArr[1]);
-            valuesArr = [res];
-            actionsArr = [actionsArr[1]];
-            displayValue = res.toString();
-            updateDisplay(displayValue);
         } else {
-            if (
-                actionsWithOneOperand.includes(actionsArr[0]) &&
-                actionsWithTwoOperand.includes(actionsArr[1])
-            ) {
-                valuesArr = [valuesArr[1]];
-                actionsArr = [actionsArr[1]];
-                getResultWithOneOperand(valuesArr, actionsArr);
+            if (actionsWithOneOperand.includes('pm')) {
+                debugger;
+                const res = getResultWithOneOperand(valuesArr[1], actionsArr);
+                valuesArr[1] = res;
+            }
+            let res = getResultSimpleOperations(valuesArr, actionsArr);
+            if (actionsWithOneOperand.includes(actionsArr[1])) {
+                res = getResultWithOneOperand(res, actionsArr[1]);
+                valuesArr = [];
+                actionsArr = [];
             } else {
-                let res = getResultSimpleOperations(valuesArr, actionsArr);
-                if (actionsWithOneOperand.includes(actionsArr[1])) {
-                    res = getResultWithOneOperand(res, actionsArr[1]);
-                }
                 valuesArr = [valuesArr[1], res];
                 actionsArr = [actionsArr[1]];
-                displayValue = res.toString();
-                updateDisplay(displayValue);
             }
+            displayValue = res.toString();
+            updateDisplay(displayValue);
         }
     }
     /** endregion здесь логика которая должна быть в другой функции */
@@ -230,7 +218,9 @@ theme.addEventListener('click', () => switchTheme(theme, styleLink));
 
 // Add Event Listeners to buttons
 acEl.addEventListener('click', reset);
-pmEl.addEventListener('click', () => {});
+pmEl.addEventListener('click', () => {
+    handleOperatorClick(actions.pm);
+});
 percentEl.addEventListener('click', () => handleOperatorClick(actions.percent));
 
 // Add event listeners to operator buttons
