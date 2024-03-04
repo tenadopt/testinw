@@ -113,16 +113,8 @@ body {
     aspect-ratio: 2 / 1;
 }
 
-.button.xdegreey {
+.button#xdegreey {
     grid-column: 1;
-    grid-row: 5 / span 2;
-    justify-content: center;
-    height: 100%;
-    aspect-ratio: 1 / 2;
-}
-
-.button.xrooty {
-    grid-column: 2;
     grid-row: 5 / span 2;
     justify-content: center;
     height: 100%;
@@ -130,7 +122,15 @@ body {
     border-bottom-left-radius: 13px;
 }
 
-.button.equal {
+.button#xrooty {
+    grid-column: 2;
+    grid-row: 5 / span 2;
+    justify-content: center;
+    height: 100%;
+    aspect-ratio: 1 / 2;
+}
+
+.button#equal {
     border-bottom-right-radius: 13px;
 }
 
