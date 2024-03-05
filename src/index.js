@@ -3,6 +3,7 @@ import { switchTheme } from './functions/switchTheme';
 import { getResultWithOneOperand } from './functions/getResultWithOneOperand';
 import { getResultSimpleOperations } from './functions/getResultSimpleOperations';
 import { parseValue } from './functions/parseValue';
+import { handleMemoryClick } from './functions/handleMemoryClick';
 
 export const actions = {
     plus: 'addition',
@@ -106,25 +107,6 @@ export const updateDisplay = value => {
     inputEl.textContent = value;
 };
 
-const plusToMemory = () => {
-    const numValue = parseValue(displayValue);
-    memoryParam += numValue;
-};
-
-const minusToMemory = () => {
-    const numValue = parseValue(displayValue);
-    memoryParam -= numValue;
-};
-
-const clearToMemory = () => {
-    memoryParam = 0;
-};
-
-const displayMemoryValue = () => {
-    displayValue = memoryParam.toString();
-    updateDisplay(displayValue);
-};
-
 inputEl.textContent = displayValue;
 
 const reset = () => {
@@ -191,13 +173,17 @@ const handleOperatorClick = action => {
     // присвоение action в массив actionArr
     setAction(action);
     // логика для 1 value & 1 action
-    console.log(valuesArr);
-    console.log(actionsArr);
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
         if (actionsWithMemory.includes(actionsArr[0])) {
-            handleMemoryClick(actionsArr[0]);
-            valuesArr = [];
+            debugger;
+            memoryParam = handleMemoryClick(valuesArr[0], memoryParam, actionsArr[0]);
+            if (memoryParam !== 0) {
+                valuesArr = [memoryParam];
+            } else valuesArr = [];
+            if (actionsArr[0] === actions.mr) {
+                updateDisplay(memoryParam);
+            }
             actionsArr = [];
         } else {
             //some logic
@@ -206,7 +192,6 @@ const handleOperatorClick = action => {
                 valuesArr = [];
                 actionsArr = [];
                 displayValue = res.toString();
-                console.log('displayValue', displayValue);
                 updateDisplay(displayValue);
             }
         }
@@ -226,11 +211,11 @@ const handleOperatorClick = action => {
                 valuesArr = [];
                 actionsArr = [];
             } else if (actionsWithMemory.includes(actionsArr[1])) {
-                res = getResultWithOneOperand(res, actionsArr[1]);
-                displayValue = res.toString();
-                updateDisplay(displayValue);
-                handleMemoryClick(actionsArr[1]);
-                valuesArr = [];
+                debugger;
+                res = handleMemoryClick(res, memoryParam, actionsArr[1]);
+                memoryParam = res;
+                updateDisplay(res);
+                valuesArr = [memoryParam];
                 actionsArr = [];
                 //logic
             } else {
@@ -242,26 +227,6 @@ const handleOperatorClick = action => {
         }
     }
     /** endregion здесь логика которая должна быть в другой функции */
-};
-
-const handleMemoryClick = action => {
-    switch (action) {
-        case actions.mplus:
-            plusToMemory();
-            break;
-        case actions.mminus:
-            minusToMemory();
-            break;
-        case actions.mr:
-            displayMemoryValue();
-            break;
-        case actions.mc:
-            clearToMemory();
-            break;
-        default:
-            break;
-    }
-    console.log('memoryParam', memoryParam);
 };
 
 // Update the displayed value

@@ -7,6 +7,9 @@ import { ChangeSignCommand } from '../commands/ChangeSignCommand';
 import { actions } from '../index';
 import { OneDivXCommand } from '../commands/OneDivXCommand';
 import { MemoryPlusCommand } from '../commands/MemoryPlusCommand';
+import { MemoryMinusCommand } from '../commands/MemoryMinusCommand';
+import { MemoryReadCommand } from '../commands/MemoryReadCommand';
+import { MemoryClearCommand } from '../commands/MemoryClearCommand';
 
 // Calculate the result of the operation and return as a string
 export const getResultWithOneOperand = (value, action) => {
@@ -37,9 +40,6 @@ export const getResultWithOneOperand = (value, action) => {
             return calculator.executeCommand();
         case actions.pm:
             calculator.setCommand(new ChangeSignCommand(value));
-            return calculator.executeCommand();
-        case actions.mplus:
-            calculator.setCommand(new MemoryPlusCommand(value));
             return calculator.executeCommand();
         default:
             return null;

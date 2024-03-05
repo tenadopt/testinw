@@ -1,15 +1,16 @@
-export class MemoryPlusCommand {
+export class MemoryMinusCommand {
     constructor(operand, memoryParam) {
         this.operand = operand;
         this.memoryParam = memoryParam;
     }
 
     execute() {
-        this.result = this.memoryParam + this.operand;
+        this.result = this.memoryParam - this.operand;
         return this.result;
     }
 
     redo() {
-        return this.operand;
+        this.result = this.memoryParam + this.operand;
+        return this.result;
     }
 }

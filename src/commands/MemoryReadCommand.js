@@ -1,22 +1,15 @@
-import { NUMBER_FROM_LOCAL_STORAGE } from '../constants/constants';
-
 export class MemoryReadCommand {
-    constructor(operand) {
+    constructor(operand, memoryParam) {
         this.operand = operand;
+        this.memoryParam = memoryParam;
     }
 
     execute() {
-        console.log('READ NUMBER_FROM_LOCAL_STORAGE', NUMBER_FROM_LOCAL_STORAGE);
-        console.log(
-            'READ localStorage',
-            parseFloat(localStorage.getItem(NUMBER_FROM_LOCAL_STORAGE)),
-        );
-        this.result = parseFloat(localStorage.getItem(NUMBER_FROM_LOCAL_STORAGE));
-        console.log('READ inside Read', this.result);
-        return this.result ? this.result : 0;
+        return this.memoryParam;
     }
 
     redo() {
-        return this.operand;
+        this.memoryParam = this.operand;
+        return this.memoryParam;
     }
 }
