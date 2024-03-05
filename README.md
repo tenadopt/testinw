@@ -48,17 +48,8 @@ These are the JS files that contain the logic and functionality for the project.
 ### getResultOfOperationAsStr.js
 This file exports a function that takes an operation as an argument and returns the result as a string.
 
-### getValueAsNum.js
-This file exports a function that takes a value as an argument and converts it to a number.
-
-### getValueAsStr.js
-This file exports a function that takes a value as an argument and converts it to a string.
-
 ### index.js
 This is the main file that imports and executes other JS modules.
-
-### setStrAsValue.js
-This file exports a function that takes a string as an argument and sets it as a value.
 
 ### switchTheme.js
 This file exports a function that switches the theme of the project.

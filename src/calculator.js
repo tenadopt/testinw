@@ -1,6 +1,3 @@
-import { setStrAsValue } from './setStrAsValue';
-import { inputEl } from './index';
-
 class Calculator {
     constructor() {
         this.command = null;
@@ -15,13 +12,10 @@ class Calculator {
         const result = this.command?.execute();
         if (result === Infinity) {
             this.history.push(0);
-            // computation.innerHTML = 0;
-            // return computation.innerHTML;
         }
         this.history.push(result);
-        // setStrAsValue(inputEl, result);
+
         return result;
-        // computation.innerHTML = result;
     }
 
     executeRedo() {

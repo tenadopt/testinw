@@ -1,4 +1,4 @@
-import { NUMBER_FROM_LOCAL_STORAGE } from '../constants';
+import { NUMBER_FROM_LOCAL_STORAGE } from '../constants/constants';
 
 export class MemoryReadCommand {
     constructor(operand) {

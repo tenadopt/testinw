@@ -1,4 +1,4 @@
-import { NUMBER_FROM_LOCAL_STORAGE } from '../constants';
+import { NUMBER_FROM_LOCAL_STORAGE } from '../constants/constants';
 
 export class MemoryPlusCommand {
     constructor(operand) {
@@ -7,7 +7,6 @@ export class MemoryPlusCommand {
 
     execute() {
         if (!localStorage.getItem(NUMBER_FROM_LOCAL_STORAGE)) {
-            debugger;
             this.result = localStorage.setItem(NUMBER_FROM_LOCAL_STORAGE, this.operand);
             return this.result;
         }

@@ -1,6 +1,8 @@
 import './styles/icons.css';
-import { switchTheme } from './switchTheme';
-import { getResultSimpleOperations, getResultWithOneOperand } from './getResultWithOneOperand';
+import { switchTheme } from './functions/switchTheme';
+import { getResultWithOneOperand } from './functions/getResultWithOneOperand';
+import { getResultSimpleOperations } from './functions/getResultSimpleOperations';
+import { parseValue } from './functions/parseValue';
 
 export const actions = {
     plus: 'addition',
@@ -99,14 +101,6 @@ let actionsArr = [];
 let displayValue = '0';
 let shouldDisplayValueUpdate = false;
 let memoryParam = 0;
-
-const parseValue = value => {
-    let floatValue = parseFloat(value);
-    if (Math.trunc(floatValue) === floatValue) {
-        return parseInt(value);
-    }
-    return floatValue;
-};
 
 export const updateDisplay = value => {
     inputEl.textContent = value;
