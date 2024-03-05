@@ -107,7 +107,7 @@ export const updateDisplay = value => {
     inputEl.textContent = value;
 };
 
-inputEl.textContent = displayValue;
+// inputEl.textContent = displayValue;
 
 const reset = () => {
     valuesArr = [];
@@ -176,7 +176,6 @@ const handleOperatorClick = action => {
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
         if (actionsWithMemory.includes(actionsArr[0])) {
-            debugger;
             memoryParam = handleMemoryClick(valuesArr[0], memoryParam, actionsArr[0]);
             if (memoryParam !== 0) {
                 valuesArr = [memoryParam];
@@ -211,7 +210,6 @@ const handleOperatorClick = action => {
                 valuesArr = [];
                 actionsArr = [];
             } else if (actionsWithMemory.includes(actionsArr[1])) {
-                debugger;
                 res = handleMemoryClick(res, memoryParam, actionsArr[1]);
                 memoryParam = res;
                 updateDisplay(res);

@@ -1,5 +1,4 @@
-import { actions, updateDisplay } from '../index';
-import { parseValue } from './parseValue';
+import { actions } from '../index';
 import { calculator } from '../calculator';
 import { MemoryPlusCommand } from '../commands/MemoryPlusCommand';
 import { MemoryMinusCommand } from '../commands/MemoryMinusCommand';
@@ -23,34 +22,4 @@ export const handleMemoryClick = (value, memoryParam, action) => {
         default:
             break;
     }
-    updateDisplay();
 };
-
-// const plusToMemory = (displayValue, memoryParam) => {
-//     debugger;
-//     const numValue = parseValue(displayValue);
-//     memoryParam += numValue;
-//     return memoryParam;
-// };
-//
-// const minusToMemory = (displayValue, memoryParam) => {
-//     const numValue = parseValue(displayValue);
-//     memoryParam -= numValue;
-//     return memoryParam;
-// };
-//
-// const clearToMemory = memoryParam => {
-//     memoryParam = 0;
-//     return memoryParam;
-// };
-//
-// const displayMemoryValue = (displayValue, memoryParam) => {
-//     debugger;
-//     if (displayValue === '0') {
-//         return;
-//     } else {
-//         displayValue = memoryParam.toString();
-//     }
-//
-//     updateDisplay(displayValue);
-// };
