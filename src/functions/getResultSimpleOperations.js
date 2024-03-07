@@ -16,21 +16,27 @@ export const getResultSimpleOperations = (valuesArr, actionsArr) => {
     switch (currentAction) {
         case actions.plus:
             calculator.setCommand(new PlusCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
         case actions.minus:
             calculator.setCommand(new SubstractionCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
         case actions.multiply:
             calculator.setCommand(new MultiplicationCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
         case actions.divide:
             calculator.setCommand(new DivisionCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
         case actions.xdegreey:
             calculator.setCommand(new ExponentionCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
         case actions.xrooty:
             calculator.setCommand(new MathRootCommand(prevValue, currentValue));
+
             return calculator.executeCommand();
     }
 };

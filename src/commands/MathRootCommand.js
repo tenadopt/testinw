@@ -6,6 +6,7 @@ export class MathRootCommand {
 
     execute() {
         this.result = Math.pow(this.firstOperand, 1 / this.secondOperand);
+
         return this.result;
     }
 

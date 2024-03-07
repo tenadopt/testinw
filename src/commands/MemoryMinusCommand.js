@@ -6,11 +6,13 @@ export class MemoryMinusCommand {
 
     execute() {
         this.result = this.memoryParam - this.operand;
+
         return this.result;
     }
 
     redo() {
         this.result = this.memoryParam + this.operand;
+
         return this.result;
     }
 }

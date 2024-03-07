@@ -5,6 +5,7 @@ export class OneDivXCommand {
 
     execute() {
         this.result = 1 / this.value;
+
         return this.result;
     }
 

@@ -132,6 +132,7 @@ const toDisplayValue = value => {
     } else {
         displayValue = `${displayValue}${value}`;
     }
+
     updateDisplay(displayValue);
 };
 
@@ -140,6 +141,7 @@ const handleNumberClick = num => {
     if (shouldDisplayValueUpdate) {
         displayValue = '0';
     }
+
     toDisplayValue(num);
 };
 //@params value = number
@@ -172,21 +174,26 @@ const handleOperatorClick = action => {
     setValue(parseValue(displayValue));
     // присвоение action в массив actionArr
     setAction(action);
+
     // логика для 1 value & 1 action
     /** region здесь логика которая должна быть в другой функции */
     if (valuesArr.length === 1 && actionsArr.length === 1) {
         if (actionsWithMemory.includes(actionsArr[0])) {
             memoryParam = handleMemoryClick(valuesArr[0], memoryParam, actionsArr[0]);
+
             if (memoryParam !== 0) {
                 valuesArr = [memoryParam];
             } else valuesArr = [];
+
             if (actionsArr[0] === actions.mr) {
                 updateDisplay(memoryParam);
             }
+
             actionsArr = [];
         } else {
             //some logic
             const res = getResultWithOneOperand(valuesArr[0], actionsArr[0]);
+
             if (res !== null) {
                 valuesArr = [];
                 actionsArr = [];
@@ -195,16 +202,19 @@ const handleOperatorClick = action => {
             }
         }
     }
+
     if (valuesArr.length === 2 && actionsArr.length === 2) {
         if (actionsArr[1] === 'equal') {
             //some logic + - / *
             const res = getResultSimpleOperations(valuesArr, actionsArr);
+
             valuesArr = [];
             actionsArr = [];
             displayValue = res.toString();
             updateDisplay(displayValue);
         } else {
             let res = getResultSimpleOperations(valuesArr, actionsArr);
+
             if (actionsWithOneOperand.includes(actionsArr[1])) {
                 res = getResultWithOneOperand(res, actionsArr[1]);
                 valuesArr = [];
@@ -220,6 +230,7 @@ const handleOperatorClick = action => {
                 valuesArr = [valuesArr[1], res];
                 actionsArr = [actionsArr[1]];
             }
+
             displayValue = res.toString();
             updateDisplay(displayValue);
         }

@@ -10,6 +10,7 @@ export class MemoryReadCommand {
 
     redo() {
         this.memoryParam = this.operand;
+
         return this.memoryParam;
     }
 }

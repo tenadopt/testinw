@@ -5,6 +5,7 @@ export class ChangeSignCommand {
 
     execute() {
         this.result = this.operand * -1;
+
         return this.result;
     }
 

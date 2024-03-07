@@ -5,6 +5,7 @@ export class MemoryClearCommand {
 
     execute() {
         this.result = 0;
+
         return this.result;
     }
 

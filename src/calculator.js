@@ -10,9 +10,11 @@ class Calculator {
 
     executeCommand() {
         const result = this.command?.execute();
+
         if (result === Infinity) {
             this.history.push(0);
         }
+
         this.history.push(result);
 
         return result;
@@ -20,6 +22,7 @@ class Calculator {
 
     executeRedo() {
         const lastCommand = this.history.pop();
+
         if (lastCommand) {
             return this.command.redo();
         }

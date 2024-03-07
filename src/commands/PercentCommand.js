@@ -5,6 +5,7 @@ export class PercentCommand {
 
     execute() {
         this.result = this.value / 100;
+
         return this.result;
     }
 

@@ -6,6 +6,7 @@ export class PlusCommand {
 
     execute() {
         this.result = this.firstOperand + this.secondOperand;
+
         return this.result;
     }
 

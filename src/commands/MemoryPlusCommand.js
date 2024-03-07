@@ -6,6 +6,7 @@ export class MemoryPlusCommand {
 
     execute() {
         this.result = this.memoryParam + this.operand;
+
         return this.result;
     }
 

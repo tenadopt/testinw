@@ -6,6 +6,7 @@ export class ExponentionCommand {
 
     execute() {
         this.result = Math.pow(this.firstOperand, this.power);
+
         return this.result;
     }
 
