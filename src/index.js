@@ -4,43 +4,7 @@ import { getResultWithOneOperand } from './functions/getResultWithOneOperand';
 import { getResultSimpleOperations } from './functions/getResultSimpleOperations';
 import { parseValue } from './functions/parseValue';
 import { handleMemoryClick } from './functions/handleMemoryClick';
-
-export const actions = {
-    plus: 'addition',
-    minus: 'subtraction',
-    divide: 'division',
-    multiply: 'multiplication',
-    percent: 'percent',
-    squarex: 'squarex',
-    squarerootx: 'squarerootx',
-    cubex: 'cubex',
-    tenx: 'tenx',
-    cuberootx: 'cuberootx',
-    xdegreey: 'xdegreey',
-    onedivx: 'onedivx',
-    xfactorial: 'xfactorial',
-    xrooty: 'xrooty',
-    equal: 'equal',
-    pm: 'pm',
-    mplus: 'mplus',
-    mminus: 'mminus',
-    mr: 'mr',
-    mc: 'mc',
-};
-
-export const actionsWithOneOperand = [
-    actions.squarex,
-    actions.squarerootx,
-    actions.cubex,
-    actions.cuberootx,
-    actions.tenx,
-    actions.onedivx,
-    actions.percent,
-    actions.xfactorial,
-    actions.pm,
-];
-
-export const actionsWithMemory = [actions.mplus, actions.mminus, actions.mr, actions.mc];
+import { Actions, actionsWithMemory, actionsWithOneOperand } from './constants/constants';
 
 // DOM Elements
 const theme = document.querySelector('.switch');
@@ -185,7 +149,7 @@ const handleOperatorClick = action => {
                 valuesArr = [memoryParam];
             } else valuesArr = [];
 
-            if (actionsArr[0] === actions.mr) {
+            if (actionsArr[0] === Actions.Mr) {
                 updateDisplay(memoryParam);
             }
 
@@ -246,66 +210,66 @@ theme.addEventListener('click', () => switchTheme(theme, styleLink));
 // Add Event Listeners to buttons
 acEl.addEventListener('click', reset);
 pmEl.addEventListener('click', () => {
-    handleOperatorClick(actions.pm);
+    handleOperatorClick(Actions.Pm);
 });
-percentEl.addEventListener('click', () => handleOperatorClick(actions.percent));
+percentEl.addEventListener('click', () => handleOperatorClick(Actions.Percent));
 
 // Add event listeners to operator buttons
-additionEl.addEventListener('click', () => handleOperatorClick(actions.plus));
+additionEl.addEventListener('click', () => handleOperatorClick(Actions.Plus));
 
 subtractionEl.addEventListener('click', () => {
-    handleOperatorClick(actions.minus);
+    handleOperatorClick(Actions.Minus);
 });
 multiplicationEl.addEventListener('click', () => {
-    handleOperatorClick(actions.multiply);
+    handleOperatorClick(Actions.Multiply);
 });
 divisionEl.addEventListener('click', () => {
-    handleOperatorClick(actions.divide);
+    handleOperatorClick(Actions.Divide);
 });
 
 sqxEl.addEventListener('click', () => {
-    handleOperatorClick(actions.squarex);
+    handleOperatorClick(Actions.Squarex);
 });
 
 sqrxEl.addEventListener('click', () => {
-    handleOperatorClick(actions.squarerootx);
+    handleOperatorClick(Actions.Squarerootx);
 });
 cubexEl.addEventListener('click', () => {
-    handleOperatorClick(actions.cubex);
+    handleOperatorClick(Actions.Cubex);
 });
 cuberxEl.addEventListener('click', () => {
-    handleOperatorClick(actions.cuberootx);
+    handleOperatorClick(Actions.Cuberootx);
 });
 tenxEl.addEventListener('click', () => {
-    handleOperatorClick(actions.tenx);
+    handleOperatorClick(Actions.Tenx);
 });
 onedivxEl.addEventListener('click', () => {
-    handleOperatorClick(actions.onedivx);
+    handleOperatorClick(Actions.Onedivx);
 });
 xdegreeyEl.addEventListener('click', () => {
-    handleOperatorClick(actions.xdegreey);
+    handleOperatorClick(Actions.Xdegreey);
 });
 xrootyEl.addEventListener('click', () => {
-    handleOperatorClick(actions.xrooty);
+    handleOperatorClick(Actions.Xrooty);
 });
 xfactorialEl.addEventListener('click', () => {
-    handleOperatorClick(actions.xfactorial);
+    handleOperatorClick(Actions.Xfactorial);
 });
 mplusEl.addEventListener('click', () => {
-    handleOperatorClick(actions.mplus);
+    handleOperatorClick(Actions.Mplus);
 });
 mminusEl.addEventListener('click', () => {
-    handleOperatorClick(actions.mminus);
+    handleOperatorClick(Actions.Mminus);
 });
 mrEl.addEventListener('click', () => {
-    handleOperatorClick(actions.mr);
+    handleOperatorClick(Actions.Mr);
 });
 mcEl.addEventListener('click', () => {
-    handleOperatorClick(actions.mc);
+    handleOperatorClick(Actions.Mc);
 });
 
 equalEl.addEventListener('click', () => {
-    handleOperatorClick(actions.equal);
+    handleOperatorClick(Actions.Equal);
 });
 
 numberElArray.forEach((numberEl, index) => {

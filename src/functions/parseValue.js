@@ -1,5 +1,5 @@
 export const parseValue = value => {
-    let floatValue = parseFloat(value);
+    const floatValue = parseFloat(value);
 
     if (Math.trunc(floatValue) === floatValue) {
         return parseInt(value);

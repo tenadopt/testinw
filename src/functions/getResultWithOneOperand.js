@@ -4,45 +4,45 @@ import { ExponentionCommand } from '../commands/ExponentionCommand';
 import { FactorialCommand } from '../commands/FactorialCommand';
 import { PercentCommand } from '../commands/PercentCommand';
 import { ChangeSignCommand } from '../commands/ChangeSignCommand';
-import { actions } from '../index';
+import { Actions } from '../constants/constants';
 import { OneDivXCommand } from '../commands/OneDivXCommand';
 
 // Calculate the result of the operation and return as a string
 export const getResultWithOneOperand = (value, action) => {
     switch (action) {
-        case actions.squarex:
+        case Actions.Squarex:
             calculator.setCommand(new ExponentionCommand(value, 2));
 
             return calculator.executeCommand();
-        case actions.squarerootx:
+        case Actions.Squarerootx:
             calculator.setCommand(new MathRootCommand(value, 2));
 
             return calculator.executeCommand();
-        case actions.cubex:
+        case Actions.Cubex:
             calculator.setCommand(new ExponentionCommand(value, 3));
 
             return calculator.executeCommand();
-        case actions.cuberootx:
+        case Actions.Cuberootx:
             calculator.setCommand(new MathRootCommand(value, 3));
 
             return calculator.executeCommand();
-        case actions.tenx:
+        case Actions.Tenx:
             calculator.setCommand(new ExponentionCommand(10, value));
 
             return calculator.executeCommand();
-        case actions.xfactorial:
+        case Actions.Xfactorial:
             calculator.setCommand(new FactorialCommand(value));
 
             return calculator.executeCommand();
-        case actions.percent:
+        case Actions.Percent:
             calculator.setCommand(new PercentCommand(value));
 
             return calculator.executeCommand();
-        case actions.onedivx:
+        case Actions.Onedivx:
             calculator.setCommand(new OneDivXCommand(value));
 
             return calculator.executeCommand();
-        case actions.pm:
+        case Actions.Pm:
             calculator.setCommand(new ChangeSignCommand(value));
 
             return calculator.executeCommand();

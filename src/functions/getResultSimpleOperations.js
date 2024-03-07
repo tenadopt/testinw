@@ -1,4 +1,4 @@
-import { actions } from '../index';
+import { Actions } from '../constants/constants';
 import { calculator } from '../calculator';
 import { PlusCommand } from '../commands/PlusCommand';
 import { SubstractionCommand } from '../commands/SubstractionCommand';
@@ -14,27 +14,27 @@ export const getResultSimpleOperations = (valuesArr, actionsArr) => {
     const prevValue = valuesArr[0];
 
     switch (currentAction) {
-        case actions.plus:
+        case Actions.Plus:
             calculator.setCommand(new PlusCommand(prevValue, currentValue));
 
             return calculator.executeCommand();
-        case actions.minus:
+        case Actions.Minus:
             calculator.setCommand(new SubstractionCommand(prevValue, currentValue));
 
             return calculator.executeCommand();
-        case actions.multiply:
+        case Actions.Multiply:
             calculator.setCommand(new MultiplicationCommand(prevValue, currentValue));
 
             return calculator.executeCommand();
-        case actions.divide:
+        case Actions.Divide:
             calculator.setCommand(new DivisionCommand(prevValue, currentValue));
 
             return calculator.executeCommand();
-        case actions.xdegreey:
+        case Actions.Xdegreey:
             calculator.setCommand(new ExponentionCommand(prevValue, currentValue));
 
             return calculator.executeCommand();
-        case actions.xrooty:
+        case Actions.Xrooty:
             calculator.setCommand(new MathRootCommand(prevValue, currentValue));
 
             return calculator.executeCommand();

@@ -1,4 +1,4 @@
-import { actions } from '../index';
+import { Actions } from '../constants/constants';
 import { calculator } from '../calculator';
 import { MemoryPlusCommand } from '../commands/MemoryPlusCommand';
 import { MemoryMinusCommand } from '../commands/MemoryMinusCommand';
@@ -7,19 +7,19 @@ import { MemoryClearCommand } from '../commands/MemoryClearCommand';
 
 export const handleMemoryClick = (value, memoryParam, action) => {
     switch (action) {
-        case actions.mplus:
+        case Actions.Mplus:
             calculator.setCommand(new MemoryPlusCommand(value, memoryParam));
 
             return calculator.executeCommand();
-        case actions.mminus:
+        case Actions.Mminus:
             calculator.setCommand(new MemoryMinusCommand(value, memoryParam));
 
             return calculator.executeCommand();
-        case actions.mr:
+        case Actions.Mr:
             calculator.setCommand(new MemoryReadCommand(value, memoryParam));
 
             return calculator.executeCommand();
-        case actions.mc:
+        case Actions.Mc:
             calculator.setCommand(new MemoryClearCommand(value, memoryParam));
 
             return calculator.executeCommand();
