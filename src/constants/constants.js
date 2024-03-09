@@ -1,5 +1,5 @@
 export const Actions = {
-    Plus: 'addition',
+    Plus: 'plus',
     Minus: 'subtraction',
     Divide: 'division',
     Multiply: 'multiplication',

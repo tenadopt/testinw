@@ -96,16 +96,16 @@ body {
     transition: filter .3s;
 }
 
-.button.function {
+.button.operation {
     color: #0c0c0c;
     background: #a8a8a8;
 }
 
-.button.operator {
-    background: #ffc966;
+#ac, #division, #multiplication, #subtraction, #plus, #equal {
+    background: #f1a33c;
 }
 
-.button.number-0 {
+.button#number-0 {
     grid-column: 3 / span 2;
     grid-row: 6;
     justify-content: center;

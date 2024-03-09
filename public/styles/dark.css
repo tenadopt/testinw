@@ -87,16 +87,16 @@ body {
     transition: filter .3s;
 }
 
-.button.function {
+.button.operation {
     color: white;
     background: #595858;
 }
 
-.button.operator {
+#ac, #division, #multiplication, #subtraction, #plus, #equal {
     background: #f1a33c;
 }
 
-.button.number-0 {
+.button#number-0 {
     grid-column: 3 / span 2;
     grid-row: 6;
     justify-content: center;

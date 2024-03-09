@@ -3,7 +3,7 @@ import { MathRootCommand } from '../commands/MathRootCommand';
 import { ExponentionCommand } from '../commands/ExponentionCommand';
 import { FactorialCommand } from '../commands/FactorialCommand';
 import { PercentCommand } from '../commands/PercentCommand';
-import { ChangeSignCommand } from '../commands/ChangeSignCommand';
+import { ChangeSignCommand } from '../commands/ChangeSignCommand/ChangeSignCommand';
 import { Actions } from '../constants/constants';
 import { OneDivXCommand } from '../commands/OneDivXCommand';
 
